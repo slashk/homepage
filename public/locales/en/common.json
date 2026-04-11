@@ -574,9 +574,6 @@
         "filters": "Filters",
         "indexers": "Indexers"
     },
-    "awscostexplorer": {
-        "mtd": "Month-to-date"
-    },
     "tubearchivist": {
         "downloads": "Queue",
         "videos": "Videos",
