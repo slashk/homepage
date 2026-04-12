@@ -27,6 +27,21 @@
   <a href="https://paypal.me/phelpsben" title="Donate"><img alt="GitHub Sponsors" src="https://img.shields.io/github/sponsors/benphelps"></a>
 </p>
 
+# IMPORTANT
+
+This is a fork (i.e. alternate version) of https://github.com/gethomepage/homepage (homepage at https://gethomepage.dev/)
+
+### Why did we create this forked version?
+
+- The [main version](https://github.com/gethomepage/homepage) wants to remain focused on self-hosted, home application monitoring with a small amount of widgets. 
+- [This version](https://github.com/slashk/homepage) wants to be your self-hosted homepage, monitoring almost *any and all* of your *stuff* (self-hosted or not). We want more widgets and services than the main repo provides.
+
+It includes this additional widgets and changes:
+
+- [AWS Cost Explorer widget](/docs/widgets/services/aws-cost-explorer.md) to monitor your AWS bill.
+
+Feel free to add a PR for new widgets.
+
 # Features
 
 With features like quick search, bookmarks, weather support, a wide range of integrations and widgets, an elegant and modern design, and a focus on performance, Homepage is your ideal start to the day and a handy companion throughout it.
