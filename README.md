@@ -97,7 +97,7 @@ docker run --name homepage \
   -v /path/to/config:/app/config \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   --restart unless-stopped \
-  ghcr.io/gethomepage/homepage:latest
+  ghcr.io/slashk/homepage:latest
 ```
 
 ## From Source
