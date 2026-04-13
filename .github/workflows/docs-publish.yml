@@ -17,7 +17,7 @@ jobs:
 
   test:
     name: Test Build Docs
-    if: github.repository == 'gethomepage/homepage' && github.event_name == 'pull_request'
+    if: github.repository == 'slashk/homepage' && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -31,7 +31,7 @@ jobs:
         run: uv run --frozen zensical build --clean
   deploy:
     name: Build & Deploy Docs
-    if: github.repository == 'gethomepage/homepage' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.repository == 'slashk/homepage' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
