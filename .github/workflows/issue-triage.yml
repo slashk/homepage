@@ -1,0 +1,43 @@
+name: Issue Triage
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  issues: write
+
+jobs:
+  close-needs-discussion:
+    name: Issues Need Discussion
+    if: github.event.label.name == 'needs-discussion'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const issueNumber = context.payload.issue.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              body: 'This issue is being closed because it was opened before a maintainer asked for an issue to be created. Please start with a discussion and follow the issue template; only open an issue when a maintainer asks you to do so.',
+            });
+
+            await github.rest.issues.update({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              state: 'closed',
+              state_reason: 'not_planned',
+            });
+
+            await github.rest.issues.lock({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              lock_reason: 'off-topic',
+            });
