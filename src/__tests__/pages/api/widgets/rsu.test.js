@@ -78,6 +78,22 @@ describe("pages/api/widgets/rsu", () => {
     expect(res.body.error).toContain("API Key");
   });
 
+  it("returns 400 when API key is null", async () => {
+    getSettings.mockReturnValueOnce({ providers: { finnhub: null } });
+    const res = createMockRes();
+    await handler({ query: { symbol: "AAPL", shares: "100", provider: "finnhub" } }, res);
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toContain("API Key");
+  });
+
+  it("returns 400 when API key is empty string", async () => {
+    getSettings.mockReturnValueOnce({ providers: { finnhub: "" } });
+    const res = createMockRes();
+    await handler({ query: { symbol: "AAPL", shares: "100", provider: "finnhub" } }, res);
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toContain("API Key");
+  });
+
   it("returns totalValue as price multiplied by shares", async () => {
     getSettings.mockReturnValueOnce({ providers: { finnhub: "testkey" } });
     cachedRequest.mockResolvedValueOnce({ c: 150.25, dp: 1.5 });
