@@ -39,10 +39,7 @@ export default function Widget({ options }) {
           <FaChartLine className="flex-none w-5 h-5 text-theme-800 dark:text-theme-200 mr-2" />
           <span className="text-theme-800 dark:text-theme-200 text-sm mr-2">{data.symbol}</span>
           <span className="text-theme-800/70 dark:text-theme-200/70 text-sm">
-            {new Intl.NumberFormat(i18n.language, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            }).format(data.totalValue)}
+            {t("common.number", { value: data.totalValue, style: "currency", currency: "USD" })}
           </span>
         </div>
       </Raw>

@@ -40,7 +40,7 @@ describe("components/widgets/rsu", () => {
     renderWithProviders(<RSU options={{ symbol: "AAPL" }} />, { settings: { target: "_self" } });
 
     expect(screen.getByText("AAPL")).toBeInTheDocument();
-    expect(screen.getByText("15,025.50")).toBeInTheDocument();
+    expect(screen.getByText("15025.5")).toBeInTheDocument();
   });
 
   it("renders error when totalValue is null", () => {
