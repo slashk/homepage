@@ -6,12 +6,12 @@ on:
   push:
     branches:
       - main
-      - feature/**
-      - fix/**
-      - dev
+      #- feature/**
+      #- fix/**
+      #- dev
     tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "main" ]
   merge_group:
 
 env:
@@ -19,10 +19,9 @@ env:
 
 jobs:
 
-
   build:
     name: Docker Build & Push
-    if: github.repository == 'gethomepage/homepage'
+    if: github.repository == 'slashk/homepage'
     runs-on: ubuntu-22.04
     permissions:
       contents: read
