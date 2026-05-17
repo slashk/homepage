@@ -1021,6 +1021,9 @@
         "closed": "Closed - US Market",
         "invalidConfiguration": "Invalid Configuration"
     },
+    "rsu": {
+        "loading": "Loading"
+    },
     "frigate": {
         "cameras": "Cameras",
         "uptime": "Uptime",

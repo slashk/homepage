@@ -10,3 +10,8 @@
 - search:
     provider: duckduckgo
     target: _blank
+
+# - rsu:
+#     symbol: AAPL
+#     shares: 150
+#     provider: finnhub
