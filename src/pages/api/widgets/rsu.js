@@ -31,7 +31,7 @@ export default async function handler(req, res) {
   const providersInConfig = getSettings()?.providers ?? {};
   const apiKey = providersInConfig[provider];
 
-  if (typeof apiKey === "undefined") {
+  if (!apiKey) {
     return res.status(400).json({ error: "Missing or invalid API Key for provider" });
   }
 

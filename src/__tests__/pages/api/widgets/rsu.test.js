@@ -98,4 +98,21 @@ describe("pages/api/widgets/rsu", () => {
 
     expect(res.body).toEqual({ symbol: "AAPL", totalValue: null });
   });
+
+  it("rounds totalValue to 2 decimal places", async () => {
+    getSettings.mockReturnValueOnce({ providers: { finnhub: "testkey" } });
+    cachedRequest.mockResolvedValueOnce({ c: 150.255, dp: 0 });
+
+    const res = createMockRes();
+    await handler({ query: { symbol: "AAPL", shares: "3", provider: "finnhub" } }, res);
+
+    expect(res.body).toEqual({ symbol: "AAPL", totalValue: 450.76 });
+  });
+
+  it("returns 400 for negative shares", async () => {
+    const res = createMockRes();
+    await handler({ query: { symbol: "AAPL", shares: "-10", provider: "finnhub" } }, res);
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toContain("Invalid shares");
+  });
 });
