@@ -34,7 +34,7 @@ describe("widgets/rsu/component", () => {
       { settings: { hideErrors: false } },
     );
 
-    expect(screen.getByText("widget.api_error")).toBeInTheDocument();
+    expect(screen.getAllByText(/widget\.api_error/).length).toBeGreaterThan(0);
   });
 
   it("renders total value on success", () => {
@@ -57,6 +57,6 @@ describe("widgets/rsu/component", () => {
       { settings: { hideErrors: false } },
     );
 
-    expect(screen.getByText("widget.api_error")).toBeInTheDocument();
+    expect(screen.getAllByText(/widget\.api_error/).length).toBeGreaterThan(0);
   });
 });

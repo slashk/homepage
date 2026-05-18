@@ -11,11 +11,7 @@ export default function Component({ service }) {
   const { data, error } = useWidgetAPI(widget, "quote", { symbol: widget.symbol });
 
   if (error || data?.error) {
-    return (
-      <Container service={service}>
-        <Block label={t("widget.api_error")} />
-      </Container>
-    );
+    return <Container service={service} error={error} />;
   }
 
   if (!data) {
@@ -27,11 +23,7 @@ export default function Component({ service }) {
   }
 
   if (data.c === null) {
-    return (
-      <Container service={service}>
-        <Block label={t("widget.api_error")} />
-      </Container>
-    );
+    return <Container service={service} error="Price unavailable" />;
   }
 
   const totalValue = data.c * Number(widget.shares);
