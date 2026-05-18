@@ -123,6 +123,7 @@ const components = {
   radarr: dynamic(() => import("./radarr/component")),
   readarr: dynamic(() => import("./readarr/component")),
   romm: dynamic(() => import("./romm/component")),
+  rsu: dynamic(() => import("./rsu/component")),
   rutorrent: dynamic(() => import("./rutorrent/component")),
   sabnzbd: dynamic(() => import("./sabnzbd/component")),
   scrutiny: dynamic(() => import("./scrutiny/component")),

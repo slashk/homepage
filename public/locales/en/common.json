@@ -1022,7 +1022,8 @@
         "invalidConfiguration": "Invalid Configuration"
     },
     "rsu": {
-        "loading": "Loading"
+        "loading": "Loading",
+        "totalValue": "Total Value"
     },
     "frigate": {
         "cameras": "Cameras",
