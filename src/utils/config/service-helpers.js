@@ -402,6 +402,10 @@ export function cleanServiceGroups(groups) {
           // sonarr, radarr
           enableQueue,
 
+          // rsu
+          symbol,
+          shares,
+
           // stocks
           watchlist,
           showUSMarketStatus,
@@ -653,6 +657,10 @@ export function cleanServiceGroups(groups) {
           if (bitratePrecision !== undefined) {
             widget.bitratePrecision = parseInt(bitratePrecision, 10);
           }
+        }
+        if (type === "rsu") {
+          if (symbol) widget.symbol = symbol;
+          if (shares) widget.shares = shares;
         }
         if (type === "stocks") {
           if (watchlist) widget.watchlist = watchlist;

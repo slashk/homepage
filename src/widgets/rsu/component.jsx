@@ -22,11 +22,12 @@ export default function Component({ service }) {
     );
   }
 
-  if (data.c === null) {
+  const sharesNum = Number(widget.shares);
+  if (data.c == null || !Number.isFinite(sharesNum) || sharesNum <= 0) {
     return <Container service={service} error={new Error(t("widget.api_error"))} />;
   }
 
-  const totalValue = data.c * Number(widget.shares);
+  const totalValue = data.c * sharesNum;
 
   return (
     <Container service={service}>
