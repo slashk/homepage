@@ -113,6 +113,7 @@ import qnap from "./qnap/widget";
 import radarr from "./radarr/widget";
 import readarr from "./readarr/widget";
 import romm from "./romm/widget";
+import rsu from "./rsu/widget";
 import rutorrent from "./rutorrent/widget";
 import sabnzbd from "./sabnzbd/widget";
 import scrutiny from "./scrutiny/widget";
@@ -274,6 +275,7 @@ const widgets = {
   radarr,
   readarr,
   romm,
+  rsu,
   rutorrent,
   sabnzbd,
   scrutiny,
