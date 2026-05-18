@@ -37,7 +37,7 @@ export default async function credentialedProxyHandler(req, res, map) {
         ...(req.extraHeaders ?? {}),
       };
 
-      if (widget.type === "stocks") {
+      if (widget.type === "stocks" || widget.type === "rsu") {
         const { providers } = getSettings();
         if (widget.provider === "finnhub" && providers?.finnhub) {
           headers["X-Finnhub-Token"] = `${providers?.finnhub}`;
