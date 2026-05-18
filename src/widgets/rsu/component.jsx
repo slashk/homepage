@@ -23,7 +23,7 @@ export default function Component({ service }) {
   }
 
   if (data.c === null) {
-    return <Container service={service} error="Price unavailable" />;
+    return <Container service={service} error={new Error(t("widget.api_error"))} />;
   }
 
   const totalValue = data.c * Number(widget.shares);
