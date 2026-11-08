@@ -1,18 +1,9 @@
 name: Docker CI
 
 on:
-  schedule:
-    - cron: '20 0 * * *'
   push:
     branches:
       - main
-      #- feature/**
-      #- fix/**
-      #- dev
-    tags: [ 'v*.*.*' ]
-  pull_request:
-    branches: [ "main" ]
-  merge_group:
 
 env:
   IMAGE_NAME: ${{ github.repository }}
