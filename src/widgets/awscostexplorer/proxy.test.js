@@ -19,8 +19,14 @@ vi.mock("utils/config/service-helpers", () => ({
 }));
 
 vi.mock("@aws-sdk/client-cost-explorer", () => ({
-  CostExplorerClient: vi.fn().mockImplementation(() => ({ send: mockSend })),
-  GetCostAndUsageCommand: vi.fn().mockImplementation((params) => params),
+  // eslint-disable-next-line func-style
+  CostExplorerClient: vi.fn(function () {
+    this.send = mockSend;
+  }),
+  // eslint-disable-next-line func-style
+  GetCostAndUsageCommand: vi.fn(function (params) {
+    Object.assign(this, params);
+  }),
 }));
 
 // Import after mocks are registered

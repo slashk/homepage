@@ -1,10 +1,11 @@
+import { withAuth } from "utils/auth";
 import { getSettings } from "utils/config/config";
 import createLogger from "utils/logger";
 import { cachedRequest } from "utils/proxy/http";
 
 const logger = createLogger("rsu");
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   const { symbol, shares, provider, cache } = req.query;
 
   if (!symbol) {
@@ -45,3 +46,5 @@ export default async function handler(req, res) {
 
   return res.send({ symbol, totalValue: parseFloat((c * sharesNum).toFixed(2)) });
 }
+
+export default withAuth(handler);
