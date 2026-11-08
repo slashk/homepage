@@ -20,6 +20,9 @@
         "minutes": "min",
         "seconds": "s"
     },
+    "auth": {
+        "signout": "Odjavi se"
+    },
     "widget": {
         "missing_type": "Nedostajuća vrsta widgeta: {{type}}",
         "api_error": "API greška",
@@ -36,7 +39,9 @@
         "wait": "Pričekaj"
     },
     "search": {
-        "placeholder": "Traži …"
+        "placeholder": "Traži …",
+        "provider": "Tražilica: {{name}}",
+        "select_provider": "Odaberi tražilicu"
     },
     "resources": {
         "cpu": "CPU",
@@ -71,6 +76,15 @@
         "degraded": "Degradirano",
         "no_data": "Nema dostupnih podataka spremišta"
     },
+    "duplicati": {
+        "jobs": "Poslovi",
+        "stored": "Spremljeno",
+        "lastBackup": "Zadnje pokretanje",
+        "nextRun": "Sljedeće pokretanje",
+        "running": "Pokreće se",
+        "warnings": "Upozorenja",
+        "errors": "Greške"
+    },
     "docker": {
         "rx": "RX",
         "tx": "TX",
@@ -85,7 +99,12 @@
         "unhealthy": "Nefunkcionalno",
         "not_found": "Nepronađeno",
         "exited": "Zatoreno",
-        "partial": "Djelomično"
+        "partial": "Djelomično",
+        "created": "Stvoreno",
+        "paused": "Pauzirano",
+        "restarting": "Ponovno pokretanje",
+        "removing": "Uklanjanje",
+        "dead": "Dead"
     },
     "ping": {
         "error": "Greška",
@@ -120,7 +139,8 @@
         "movies": "Filmovi",
         "series": "Serije",
         "episodes": "Epizode",
-        "songs": "Pjesme"
+        "songs": "Pjesme",
+        "albums": "Albumi"
     },
     "esphome": {
         "offline": "Offline",
@@ -235,6 +255,16 @@
         "upload": "Prenesi",
         "leech": "Korištenje tuđeg sadržaja",
         "seed": "Prenošenje preuzetog sadržaja"
+    },
+    "qui": {
+        "leech": "Leech",
+        "download": "Preuzmi",
+        "seed": "Seed",
+        "upload": "Prenesi",
+        "total": "Ukupno",
+        "errored": "S greškom",
+        "ratio": "Omjer",
+        "freeSpace": "Slobodno"
     },
     "qnap": {
         "cpuUsage": "Korištenje procesora",
@@ -458,13 +488,19 @@
     "authentik": {
         "users": "Korisnici",
         "loginsLast24H": "Prijave (24 h)",
-        "failedLoginsLast24H": "Neuspjele prijave (24 h)"
+        "failedLoginsLast24H": "Neuspjele prijave (24 h)",
+        "authorizationsLast24H": "Autorizacije (24h)"
     },
     "proxmox": {
         "mem": "MEM",
         "cpu": "CPU",
         "lxc": "Linux kontejner",
         "vms": "Virtualni uređaji"
+    },
+    "pulse": {
+        "nodes": "Čvorovi",
+        "vms": "VM-ovi",
+        "lxcs": "LXC-ovi"
     },
     "glances": {
         "cpu": "CPU",
@@ -754,7 +790,8 @@
         "queue": "Red čekanja",
         "processing": "Obrada",
         "processed": "Obrađeno",
-        "time": "Vrijeme"
+        "time": "Vrijeme",
+        "failed": "Neuspjelo"
     },
     "firefly": {
         "networth": "Neto vrijednost",
@@ -830,6 +867,14 @@
     "booklore": {
         "libraries": "Knjižnice",
         "books": "Knjige",
+        "reading": "Čitanje",
+        "finished": "Završeno"
+    },
+    "bookorbit": {
+        "books": "Knjige",
+        "authors": "Autori",
+        "series": "Serije",
+        "storage": "Spremište",
         "reading": "Čitanje",
         "finished": "Završeno"
     },
@@ -931,6 +976,22 @@
         "mailboxes": "Poštanski sandučići",
         "mails": "Pošta",
         "storage": "Spremište"
+    },
+    "maintainerr": {
+        "itemsHandled": "Obrađene stavke",
+        "episodesHandled": "Obrađene epizode",
+        "moviesHandled": "Obrađeni filmovi",
+        "showsHandled": "Obrađene emisije",
+        "seasonsHandled": "Obrađene sezone",
+        "reclaimable": "Reclaimable",
+        "movieReclaimable": "Movie Reclaimable",
+        "showReclaimable": "Show Reclaimable",
+        "totalCapacity": "Ukupni kapacitet"
+    },
+    "netbird": {
+        "online": "Online Peers",
+        "users": "Users",
+        "login_expired": "Login Expired"
     },
     "netdata": {
         "warnings": "Upozorenja",
@@ -1210,5 +1271,19 @@
         "burned": "Potrošeno",
         "remaining": "Preostalo",
         "steps": "Koraci"
+    },
+    "syncthing": {
+        "connected": "Povezano",
+        "synced": "Sinkronizirano",
+        "errors": "Greške",
+        "storage": "Spremište"
+    },
+    "sportarr": {
+        "wanted": "Željeno",
+        "queued": "U redu čekanja",
+        "leagues": "Lige"
+    },
+    "feed": {
+        "noItems": "Nema stavki"
     }
 }

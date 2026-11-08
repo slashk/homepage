@@ -20,6 +20,9 @@
         "minutes": "dk",
         "seconds": "s"
     },
+    "auth": {
+        "signout": "Sign out"
+    },
     "widget": {
         "missing_type": "Eksik Araç Türü: {{type}}",
         "api_error": "API Hatası",
@@ -36,7 +39,9 @@
         "wait": "Lütfen bekleyin"
     },
     "search": {
-        "placeholder": "Ara…"
+        "placeholder": "Ara…",
+        "provider": "Search engine: {{name}}",
+        "select_provider": "Select search engine"
     },
     "resources": {
         "cpu": "İşlemci",
@@ -71,6 +76,15 @@
         "degraded": "Degraded",
         "no_data": "No storage data available"
     },
+    "duplicati": {
+        "jobs": "Jobs",
+        "stored": "Stored",
+        "lastBackup": "Last Run",
+        "nextRun": "Next Run",
+        "running": "Running",
+        "warnings": "Warnings",
+        "errors": "Errors"
+    },
     "docker": {
         "rx": "Gelen Veri",
         "tx": "Giden Veri",
@@ -85,7 +99,12 @@
         "unhealthy": "Sağlıksız",
         "not_found": "Bulunamadı",
         "exited": "Kapandı",
-        "partial": "Kısmi"
+        "partial": "Kısmi",
+        "created": "Created",
+        "paused": "Paused",
+        "restarting": "Restarting",
+        "removing": "Removing",
+        "dead": "Dead"
     },
     "ping": {
         "error": "Hata",
@@ -120,7 +139,8 @@
         "movies": "Film",
         "series": "Dizi",
         "episodes": "Bölüm",
-        "songs": "Şarkı"
+        "songs": "Şarkı",
+        "albums": "Albums"
     },
     "esphome": {
         "offline": "Çevrimdışı",
@@ -236,6 +256,16 @@
         "leech": "İndirilen",
         "seed": "Gönderilen"
     },
+    "qui": {
+        "leech": "Leech",
+        "download": "Download",
+        "seed": "Seed",
+        "upload": "Upload",
+        "total": "Total",
+        "errored": "Errored",
+        "ratio": "Ratio",
+        "freeSpace": "Free"
+    },
     "qnap": {
         "cpuUsage": "İşlemci Kullanımı",
         "memUsage": "Bellek Kullanımı",
@@ -295,10 +325,10 @@
         "available": "Kullanılabilir"
     },
     "seerr": {
-        "pending": "Pending",
-        "approved": "Approved",
-        "available": "Available",
-        "completed": "Completed",
+        "pending": "Bekleyen",
+        "approved": "Onaylanan",
+        "available": "Kullanılabilir",
+        "completed": "Tamamlanan",
         "processing": "Processing",
         "issues": "Open Issues"
     },
@@ -458,13 +488,19 @@
     "authentik": {
         "users": "Kullanıcılar",
         "loginsLast24H": "Girişler (24 Saat)",
-        "failedLoginsLast24H": "Başarısız Girişler (24 Saat)"
+        "failedLoginsLast24H": "Başarısız Girişler (24 Saat)",
+        "authorizationsLast24H": "Auths (24h)"
     },
     "proxmox": {
         "mem": "Bellek",
         "cpu": "İşlemci",
         "lxc": "LXC",
         "vms": "Sanal Makineler"
+    },
+    "pulse": {
+        "nodes": "Nodes",
+        "vms": "VMs",
+        "lxcs": "LXCs"
     },
     "glances": {
         "cpu": "İşlemci",
@@ -754,7 +790,8 @@
         "queue": "Kuyruk",
         "processing": "İşleniyor",
         "processed": "İşlendi",
-        "time": "Zaman"
+        "time": "Zaman",
+        "failed": "Failed"
     },
     "firefly": {
         "networth": "Net değer",
@@ -832,6 +869,14 @@
         "books": "Kitaplar",
         "reading": "Okunuyor",
         "finished": "Bitti"
+    },
+    "bookorbit": {
+        "books": "Books",
+        "authors": "Authors",
+        "series": "Series",
+        "storage": "Storage",
+        "reading": "Reading",
+        "finished": "Finished"
     },
     "jdownloader": {
         "downloadCount": "Kuyruk",
@@ -931,6 +976,22 @@
         "mailboxes": "Posta kutuları",
         "mails": "Postalar",
         "storage": "Depolama"
+    },
+    "maintainerr": {
+        "itemsHandled": "Items Handled",
+        "episodesHandled": "Episodes Handled",
+        "moviesHandled": "Movies Handled",
+        "showsHandled": "Shows Handled",
+        "seasonsHandled": "Seasons Handled",
+        "reclaimable": "Reclaimable",
+        "movieReclaimable": "Movie Reclaimable",
+        "showReclaimable": "Show Reclaimable",
+        "totalCapacity": "Total Capacity"
+    },
+    "netbird": {
+        "online": "Online Peers",
+        "users": "Users",
+        "login_expired": "Login Expired"
     },
     "netdata": {
         "warnings": "Uyarılar",
@@ -1210,5 +1271,19 @@
         "burned": "Burned",
         "remaining": "Remaining",
         "steps": "Steps"
+    },
+    "syncthing": {
+        "connected": "Connected",
+        "synced": "Synced",
+        "errors": "Errors",
+        "storage": "Storage"
+    },
+    "sportarr": {
+        "wanted": "Wanted",
+        "queued": "Queued",
+        "leagues": "Leagues"
+    },
+    "feed": {
+        "noItems": "No items"
     }
 }

@@ -20,6 +20,9 @@
         "minutes": "м",
         "seconds": "с"
     },
+    "auth": {
+        "signout": "Sign out"
+    },
     "widget": {
         "missing_type": "Недостаје тип виџета: {{type}}",
         "api_error": "API Грешка",
@@ -36,7 +39,9 @@
         "wait": "Молим сачекајте"
     },
     "search": {
-        "placeholder": "Претражи…"
+        "placeholder": "Претражи…",
+        "provider": "Search engine: {{name}}",
+        "select_provider": "Select search engine"
     },
     "resources": {
         "cpu": "Процесор",
@@ -71,6 +76,15 @@
         "degraded": "Деградирано",
         "no_data": "Нема доступних података о складиштењу"
     },
+    "duplicati": {
+        "jobs": "Jobs",
+        "stored": "Stored",
+        "lastBackup": "Last Run",
+        "nextRun": "Next Run",
+        "running": "Running",
+        "warnings": "Warnings",
+        "errors": "Errors"
+    },
     "docker": {
         "rx": "RX",
         "tx": "TX",
@@ -85,7 +99,12 @@
         "unhealthy": "Нездравих",
         "not_found": "Није пронађено",
         "exited": "Напуштених",
-        "partial": "Делимично"
+        "partial": "Делимично",
+        "created": "Created",
+        "paused": "Paused",
+        "restarting": "Restarting",
+        "removing": "Removing",
+        "dead": "Dead"
     },
     "ping": {
         "error": "Грешка",
@@ -120,7 +139,8 @@
         "movies": "Филмови",
         "series": "Серије",
         "episodes": "Епизоде",
-        "songs": "Песме"
+        "songs": "Песме",
+        "albums": "Albums"
     },
     "esphome": {
         "offline": "Није на мрежи",
@@ -236,6 +256,16 @@
         "leech": "Leech",
         "seed": "Seed"
     },
+    "qui": {
+        "leech": "Leech",
+        "download": "Download",
+        "seed": "Seed",
+        "upload": "Upload",
+        "total": "Total",
+        "errored": "Errored",
+        "ratio": "Ratio",
+        "freeSpace": "Free"
+    },
     "qnap": {
         "cpuUsage": "Искоришћеност процесора",
         "memUsage": "Заузеће меморије",
@@ -344,16 +374,16 @@
         "address": "Адреса",
         "expires": "Истиче",
         "never": "Никада",
-        "user": "User",
-        "hostname": "Hostname",
-        "name": "Name",
-        "client_version": "Client Version",
-        "os": "OS",
-        "created": "Created",
-        "authorized": "Authorized",
-        "is_external": "Is External",
-        "update_available": "Update Available",
-        "tags": "Tags",
+        "user": "Корисник",
+        "hostname": "Име хоста",
+        "name": "Назив",
+        "client_version": "Верзија клијента",
+        "os": "ОС",
+        "created": "Креирано",
+        "authorized": "Овлашћено",
+        "is_external": "Је спољни",
+        "update_available": "Доступно ажурирање",
+        "tags": "Ознаке",
         "last_seen": "Последње виђен",
         "now": "Сада",
         "years": "{{number}}г",
@@ -363,8 +393,8 @@
         "minutes": "{{number}}м",
         "seconds": "{{number}}с",
         "ago": "Пре {{value}}",
-        "true": "Yes",
-        "false": "No"
+        "true": "Да",
+        "false": "Не"
     },
     "technitium": {
         "totalQueries": "Упити",
@@ -458,13 +488,19 @@
     "authentik": {
         "users": "Корисника",
         "loginsLast24H": "Пријаве (24ч)",
-        "failedLoginsLast24H": "Неуспешне пријаве (24ч)"
+        "failedLoginsLast24H": "Неуспешне пријаве (24ч)",
+        "authorizationsLast24H": "Auths (24h)"
     },
     "proxmox": {
         "mem": "Меморија",
         "cpu": "Процесор",
         "lxc": "LXC",
         "vms": "VMs"
+    },
+    "pulse": {
+        "nodes": "Nodes",
+        "vms": "VMs",
+        "lxcs": "LXCs"
     },
     "glances": {
         "cpu": "Процесор",
@@ -754,7 +790,8 @@
         "queue": "Ред",
         "processing": "Обрада",
         "processed": "Обрада",
-        "time": "Време"
+        "time": "Време",
+        "failed": "Failed"
     },
     "firefly": {
         "networth": "Нето вредност",
@@ -832,6 +869,14 @@
         "books": "Књиге",
         "reading": "Читање",
         "finished": "Завршено"
+    },
+    "bookorbit": {
+        "books": "Books",
+        "authors": "Authors",
+        "series": "Series",
+        "storage": "Storage",
+        "reading": "Reading",
+        "finished": "Finished"
     },
     "jdownloader": {
         "downloadCount": "Ред",
@@ -932,22 +977,38 @@
         "mails": "Пошта",
         "storage": "Складиште"
     },
+    "maintainerr": {
+        "itemsHandled": "Items Handled",
+        "episodesHandled": "Episodes Handled",
+        "moviesHandled": "Movies Handled",
+        "showsHandled": "Shows Handled",
+        "seasonsHandled": "Seasons Handled",
+        "reclaimable": "Reclaimable",
+        "movieReclaimable": "Movie Reclaimable",
+        "showReclaimable": "Show Reclaimable",
+        "totalCapacity": "Total Capacity"
+    },
+    "netbird": {
+        "online": "Online Peers",
+        "users": "Users",
+        "login_expired": "Login Expired"
+    },
     "netdata": {
         "warnings": "Упозорења",
         "criticals": "Критично"
     },
     "ntfy": {
-        "title": "Title",
-        "priority": "Priority",
-        "lastReceived": "Last Received",
-        "message": "Message",
-        "tags": "Tags",
-        "none": "None",
-        "min": "Min",
-        "low": "Low",
-        "default": "Default",
-        "high": "High",
-        "urgent": "Urgent"
+        "title": "Назив",
+        "priority": "Приоритет",
+        "lastReceived": "Последње примљено",
+        "message": "Порука",
+        "tags": "Ознаке",
+        "none": "Без",
+        "min": "Мин",
+        "low": "Ниско",
+        "default": "Подразумевано",
+        "high": "Високо",
+        "urgent": "Хитно"
     },
     "plantit": {
         "events": "Догађаји",
@@ -1210,5 +1271,19 @@
         "burned": "Спаљено",
         "remaining": "Преостало",
         "steps": "Кораци"
+    },
+    "syncthing": {
+        "connected": "Connected",
+        "synced": "Synced",
+        "errors": "Errors",
+        "storage": "Storage"
+    },
+    "sportarr": {
+        "wanted": "Wanted",
+        "queued": "Queued",
+        "leagues": "Leagues"
+    },
+    "feed": {
+        "noItems": "No items"
     }
 }

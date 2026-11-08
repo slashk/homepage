@@ -20,6 +20,9 @@
         "minutes": "m",
         "seconds": "s"
     },
+    "auth": {
+        "signout": "Sign out"
+    },
     "widget": {
         "missing_type": "Manka Tipo de Fenestraĵo: {{type}}",
         "api_error": "Eraro de API",
@@ -36,7 +39,9 @@
         "wait": "Bonvolu atendi"
     },
     "search": {
-        "placeholder": "Serĉi…"
+        "placeholder": "Serĉi…",
+        "provider": "Search engine: {{name}}",
+        "select_provider": "Select search engine"
     },
     "resources": {
         "cpu": "Ĉefprocesoro",
@@ -71,6 +76,15 @@
         "degraded": "Degraded",
         "no_data": "No storage data available"
     },
+    "duplicati": {
+        "jobs": "Jobs",
+        "stored": "Stored",
+        "lastBackup": "Last Run",
+        "nextRun": "Next Run",
+        "running": "Running",
+        "warnings": "Warnings",
+        "errors": "Errors"
+    },
     "docker": {
         "rx": "RX",
         "tx": "TX",
@@ -85,7 +99,12 @@
         "unhealthy": "Malsana",
         "not_found": "Ne trovita",
         "exited": "Eliris",
-        "partial": "Parta"
+        "partial": "Parta",
+        "created": "Created",
+        "paused": "Paused",
+        "restarting": "Restarting",
+        "removing": "Removing",
+        "dead": "Dead"
     },
     "ping": {
         "error": "Error",
@@ -120,7 +139,8 @@
         "movies": "Movies",
         "series": "Series",
         "episodes": "Episodes",
-        "songs": "Songs"
+        "songs": "Songs",
+        "albums": "Albums"
     },
     "esphome": {
         "offline": "Offline",
@@ -235,6 +255,16 @@
         "upload": "Upload",
         "leech": "Leech",
         "seed": "Seed"
+    },
+    "qui": {
+        "leech": "Leech",
+        "download": "Download",
+        "seed": "Seed",
+        "upload": "Upload",
+        "total": "Total",
+        "errored": "Errored",
+        "ratio": "Ratio",
+        "freeSpace": "Free"
     },
     "qnap": {
         "cpuUsage": "CPU Usage",
@@ -458,13 +488,19 @@
     "authentik": {
         "users": "Users",
         "loginsLast24H": "Logins (24h)",
-        "failedLoginsLast24H": "Failed Logins (24h)"
+        "failedLoginsLast24H": "Failed Logins (24h)",
+        "authorizationsLast24H": "Auths (24h)"
     },
     "proxmox": {
         "mem": "MEM",
         "cpu": "CPU",
         "lxc": "LXC",
         "vms": "VMs"
+    },
+    "pulse": {
+        "nodes": "Nodes",
+        "vms": "VMs",
+        "lxcs": "LXCs"
     },
     "glances": {
         "cpu": "CPU",
@@ -754,7 +790,8 @@
         "queue": "Queue",
         "processing": "Processing",
         "processed": "Processed",
-        "time": "Time"
+        "time": "Time",
+        "failed": "Failed"
     },
     "firefly": {
         "networth": "Net Worth",
@@ -830,6 +867,14 @@
     "booklore": {
         "libraries": "Libraries",
         "books": "Books",
+        "reading": "Reading",
+        "finished": "Finished"
+    },
+    "bookorbit": {
+        "books": "Books",
+        "authors": "Authors",
+        "series": "Series",
+        "storage": "Storage",
         "reading": "Reading",
         "finished": "Finished"
     },
@@ -931,6 +976,22 @@
         "mailboxes": "Mailboxes",
         "mails": "Mails",
         "storage": "Storage"
+    },
+    "maintainerr": {
+        "itemsHandled": "Items Handled",
+        "episodesHandled": "Episodes Handled",
+        "moviesHandled": "Movies Handled",
+        "showsHandled": "Shows Handled",
+        "seasonsHandled": "Seasons Handled",
+        "reclaimable": "Reclaimable",
+        "movieReclaimable": "Movie Reclaimable",
+        "showReclaimable": "Show Reclaimable",
+        "totalCapacity": "Total Capacity"
+    },
+    "netbird": {
+        "online": "Online Peers",
+        "users": "Users",
+        "login_expired": "Login Expired"
     },
     "netdata": {
         "warnings": "Warnings",
@@ -1210,5 +1271,19 @@
         "burned": "Burned",
         "remaining": "Remaining",
         "steps": "Steps"
+    },
+    "syncthing": {
+        "connected": "Connected",
+        "synced": "Synced",
+        "errors": "Errors",
+        "storage": "Storage"
+    },
+    "sportarr": {
+        "wanted": "Wanted",
+        "queued": "Queued",
+        "leagues": "Leagues"
+    },
+    "feed": {
+        "noItems": "No items"
     }
 }

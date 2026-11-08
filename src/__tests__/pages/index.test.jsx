@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { invalidateDashboardData } from "utils/config/dashboard";
 import { ColorContext } from "utils/contexts/color";
 import { SettingsContext } from "utils/contexts/settings";
 import { TabContext } from "utils/contexts/tab";
@@ -25,6 +26,7 @@ const {
     throwIn: null,
     validateData: [],
     hashData: null,
+    hashConfig: null,
     mutateHash: vi.fn(),
     servicesData: [],
     bookmarksData: [],
@@ -59,9 +61,12 @@ const {
   const serverSideTranslations = vi.fn(async (language) => ({ _translations: language }));
   const logger = { error: vi.fn() };
 
-  const useSWR = vi.fn((key) => {
+  const useSWR = vi.fn((key, config) => {
     if (key === "/api/validate") return { data: state.validateData };
-    if (key === "/api/hash") return { data: state.hashData, mutate: state.mutateHash };
+    if (key === "/api/hash") {
+      state.hashConfig = config;
+      return { data: state.hashData, mutate: state.mutateHash };
+    }
     if (key === "/api/services") return { data: state.servicesData };
     if (key === "/api/bookmarks") return { data: state.bookmarksData };
     if (key === "/api/widgets") return { data: state.widgetsData };
@@ -92,14 +97,14 @@ vi.mock("next/head", () => ({ default: ({ children }) => children }));
 vi.mock("next/script", () => ({ default: () => null }));
 vi.mock("next/router", () => ({ useRouter: () => router }));
 
-vi.mock("next-i18next", () => ({
+vi.mock("next-i18next/pages", () => ({
   useTranslation: () => ({
     i18n,
     t: (k) => k,
   }),
 }));
 
-vi.mock("next-i18next/serverSideTranslations", () => ({
+vi.mock("next-i18next/pages/serverSideTranslations", () => ({
   serverSideTranslations,
 }));
 
@@ -166,12 +171,14 @@ vi.mock("components/toggles/revalidate", () => ({
   default: () => null,
 }));
 
-describe("pages/index getStaticProps", () => {
+describe("pages/index getServerSideProps", () => {
   beforeEach(() => {
+    invalidateDashboardData();
     vi.clearAllMocks();
     state.throwIn = null;
     state.validateData = [];
     state.hashData = null;
+    state.hashConfig = null;
     state.servicesData = [];
     state.bookmarksData = [];
     state.widgetsData = [];
@@ -185,8 +192,8 @@ describe("pages/index getStaticProps", () => {
   it("returns initial settings and api fallbacks for swr", async () => {
     getSettings.mockReturnValueOnce({ providers: { x: 1 }, language: "en", title: "Homepage" });
 
-    const { getStaticProps } = await import("pages/index.jsx");
-    const result = await getStaticProps();
+    const { getServerSideProps } = await import("pages/index.jsx");
+    const result = await getServerSideProps({});
 
     expect(result.props.initialSettings).toEqual({ language: "en", title: "Homepage" });
     expect(result.props.fallback["/api/services"]).toEqual([{ name: "svc" }]);
@@ -199,8 +206,8 @@ describe("pages/index getStaticProps", () => {
   it("normalizes legacy language codes before requesting translations", async () => {
     getSettings.mockReturnValueOnce({ providers: {}, language: "zh-CN" });
 
-    const { getStaticProps } = await import("pages/index.jsx");
-    await getStaticProps();
+    const { getServerSideProps } = await import("pages/index.jsx");
+    await getServerSideProps({});
 
     expect(serverSideTranslations).toHaveBeenCalledWith("zh-Hans");
   });
@@ -209,8 +216,8 @@ describe("pages/index getStaticProps", () => {
     getSettings.mockReturnValueOnce({ providers: {}, language: "de" });
     state.throwIn = "services";
 
-    const { getStaticProps } = await import("pages/index.jsx");
-    const result = await getStaticProps();
+    const { getServerSideProps } = await import("pages/index.jsx");
+    const result = await getServerSideProps({});
 
     expect(result.props.initialSettings).toEqual({});
     expect(result.props.fallback["/api/services"]).toEqual([]);
@@ -324,13 +331,12 @@ describe("pages/index Index routing + SWR branches", () => {
   });
 
   it("renders config errors when /api/validate returns a list of errors", async () => {
-    state.validateData = [{ config: "services.yaml", reason: "broken", mark: { snippet: "x: y" } }];
+    state.validateData = [{ config: "services.yaml", name: "Service 1", reason: "broken", mark: { line: 4 } }];
 
     await renderIndex({ initialSettings: { title: "Homepage", layout: {} }, settings: { layout: {} } });
 
-    expect(screen.getByText("services.yaml")).toBeInTheDocument();
-    expect(screen.getByText("broken")).toBeInTheDocument();
-    expect(screen.getByText("x: y")).toBeInTheDocument();
+    expect(screen.getByText(/services.yaml/)).toBeInTheDocument();
+    expect(screen.getByText(/line 4/)).toBeInTheDocument();
   });
 
   it("marks the UI stale when the hash changes and triggers a revalidate reload", async () => {
@@ -352,6 +358,7 @@ describe("pages/index Index routing + SWR branches", () => {
     }
 
     await renderIndex({ initialSettings: { title: "Homepage", layout: {} }, settings: { layout: {} } });
+    act(() => state.hashConfig.onSuccess(state.hashData));
 
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenCalledWith("/api/revalidate");
@@ -380,10 +387,23 @@ describe("pages/index Index routing + SWR branches", () => {
     localStorage.removeItem("hash");
 
     await renderIndex({ initialSettings: { title: "Homepage", layout: {} }, settings: { layout: {} } });
+    act(() => state.hashConfig.onSuccess(state.hashData));
 
     await waitFor(() => {
       expect(localStorage.getItem("hash")).toBe("first-hash");
     });
+  });
+
+  it("ignores a hash response without a hash", async () => {
+    state.validateData = [];
+    localStorage.setItem("hash", "old-hash");
+
+    await renderIndex({ initialSettings: { title: "Homepage", layout: {} }, settings: { layout: {} } });
+
+    expect(() => act(() => state.hashConfig.onSuccess(null))).not.toThrow();
+    expect(() => act(() => state.hashConfig.onSuccess({}))).not.toThrow();
+    expect(localStorage.getItem("hash")).toBe("old-hash");
+    expect(document.querySelector(".animate-spin")).toBeFalsy();
   });
 });
 
@@ -420,9 +440,25 @@ describe("pages/index Home behavior", () => {
 
     fireEvent.keyDown(document.body, { key: "a" });
     expect(screen.getByTestId("quicklaunch")).toHaveTextContent("open:3");
+    expect(state.quickLaunchProps.searchString).toBe("a");
 
     fireEvent.keyDown(document.body, { key: "Escape" });
     expect(screen.getByTestId("quicklaunch")).toHaveTextContent("closed:3");
+  });
+
+  it("opens search on space without seeding the query with whitespace", async () => {
+    await renderIndex({
+      initialSettings: { title: "Homepage", layout: {} },
+      settings: { title: "Homepage", layout: {}, language: "en" },
+    });
+
+    await waitFor(() => {
+      expect(state.quickLaunchProps).toBeTruthy();
+    });
+
+    fireEvent.keyDown(document.body, { key: " " });
+    expect(screen.getByTestId("quicklaunch")).toHaveTextContent("open:3");
+    expect(state.quickLaunchProps.searchString).toBe("");
   });
 
   it("renders services and bookmark groups when present", async () => {
@@ -490,7 +526,7 @@ describe("pages/index Home behavior", () => {
     state.widgetsData = [];
 
     const { setTheme, setColor, setSettings } = await renderIndex({
-      initialSettings: { title: "Homepage", layout: {} },
+      initialSettings: { title: "Homepage", layout: {}, favicon: "/x.ico" },
       settings: {
         title: "Homepage",
         layout: {},
@@ -499,7 +535,6 @@ describe("pages/index Home behavior", () => {
         color: "emerald",
         disableIndexing: true,
         base: "/base/",
-        favicon: "/x.ico",
       },
       theme: "dark",
       color: "slate",
@@ -515,6 +550,20 @@ describe("pages/index Home behavior", () => {
     expect(document.querySelector('meta[name="robots"][content="noindex, nofollow"]')).toBeTruthy();
     expect(document.querySelector("base")?.getAttribute("href")).toBe("/base/");
     expect(document.querySelector('link[rel="icon"]')?.getAttribute("href")).toBe("/x.ico");
+  });
+
+  // Safari reads the head without running JS, so the favicon has to be there before the
+  // settings context is populated, and mask-icon must not be
+  it("renders a custom favicon before the settings context is populated", async () => {
+    await renderIndex({
+      initialSettings: { title: "Homepage", layout: {}, favicon: "/x.ico" },
+      settings: {},
+    });
+
+    expect(document.querySelector('link[rel="icon"]')?.getAttribute("href")).toBe("/x.ico");
+    expect(document.querySelector('link[rel="apple-touch-icon"]')?.getAttribute("href")).toBe("/x.ico");
+    expect(document.querySelector('link[rel="mask-icon"]')).toBeNull();
+    expect(document.querySelector('link[rel="shortcut icon"]')).toBeNull();
   });
 
   it("marks information widgets as right-aligned for known widget types", async () => {

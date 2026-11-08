@@ -1,15 +1,16 @@
 import classNames from "classnames";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next/pages";
 import { useContext } from "react";
 import { FaMemory, FaRegClock, FaThermometerHalf } from "react-icons/fa";
 import { FiCpu, FiHardDrive } from "react-icons/fi";
 import useSWR from "swr";
-import { SettingsContext } from "utils/contexts/settings";
 
 import Error from "../widget/error";
 import Resource from "../widget/resource";
 import Resources from "../widget/resources";
 import WidgetLabel from "../widget/widget_label";
+
+import { SettingsContext } from "utils/contexts/settings";
 
 const defaultCpuSensorLabels = ["cpu_thermal", "Core", "Tctl", "Temperature"];
 

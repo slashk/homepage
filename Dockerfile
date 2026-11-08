@@ -1,7 +1,7 @@
 # =========================
 # Builder Stage
 # =========================
-FROM node:22-slim AS builder
+FROM node:24-slim AS builder
 WORKDIR /app
 
 # Setup
@@ -30,7 +30,7 @@ RUN if [ "$CI" != "true" ]; then \
 # =========================
 # Runtime Stage
 # =========================
-FROM node:22-alpine AS runner
+FROM node:24-alpine AS runner
 LABEL org.opencontainers.image.title="Homepage"
 LABEL org.opencontainers.image.description="A fork of self-hosted services landing page, with docker and service integrations."
 LABEL org.opencontainers.image.url="https://github.com/slashk/homepage"
@@ -59,7 +59,7 @@ ENV PORT=3000
 EXPOSE $PORT
 
 HEALTHCHECK --interval=10s --timeout=3s --start-period=20s \
-  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:$PORT/api/healthcheck || exit 1
+  CMD wget --no-verbose --tries=1 --spider -Y off http://127.0.0.1:$PORT/api/healthcheck || exit 1
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["node", "server.js"]

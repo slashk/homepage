@@ -20,6 +20,9 @@
         "minutes": "m",
         "seconds": "s"
     },
+    "auth": {
+        "signout": "Teken uit"
+    },
     "widget": {
         "missing_type": "Ontbrekende legstuk-tipe: {{type}}",
         "api_error": "API Fout",
@@ -36,7 +39,9 @@
         "wait": "Wag asseblief"
     },
     "search": {
-        "placeholder": "Soek…"
+        "placeholder": "Soek…",
+        "provider": "Soekenjin: {{name}}",
+        "select_provider": "Kies soekenjin"
     },
     "resources": {
         "cpu": "SVE",
@@ -71,6 +76,15 @@
         "degraded": "Gedegradeer",
         "no_data": "Geen bergingsdata beskikbaar nie"
     },
+    "duplicati": {
+        "jobs": "Take",
+        "stored": "Gestoor",
+        "lastBackup": "Laaste Lopie",
+        "nextRun": "Volgende Lopie",
+        "running": "Lopend",
+        "warnings": "Waarskuwings",
+        "errors": "Foute"
+    },
     "docker": {
         "rx": "RX",
         "tx": "TX",
@@ -85,7 +99,12 @@
         "unhealthy": "Ongesond",
         "not_found": "Nie Gevind Nie",
         "exited": "Verlaat",
-        "partial": "Gedeeltelik"
+        "partial": "Gedeeltelik",
+        "created": "Geskep",
+        "paused": "Onderbreek",
+        "restarting": "Herlaai",
+        "removing": "Verwydering",
+        "dead": "Dood"
     },
     "ping": {
         "error": "Fout",
@@ -120,7 +139,8 @@
         "movies": "Movies",
         "series": "Reekse",
         "episodes": "Episode",
-        "songs": "Liedjies"
+        "songs": "Liedjies",
+        "albums": "Albums"
     },
     "esphome": {
         "offline": "Vanlyn af",
@@ -235,6 +255,16 @@
         "upload": "Laai Op",
         "leech": "Seier",
         "seed": "Vul"
+    },
+    "qui": {
+        "leech": "Leech",
+        "download": "Download",
+        "seed": "Seed",
+        "upload": "Upload",
+        "total": "Total",
+        "errored": "Errored",
+        "ratio": "Ratio",
+        "freeSpace": "Free"
     },
     "qnap": {
         "cpuUsage": "SVE Gebruik",
@@ -458,13 +488,19 @@
     "authentik": {
         "users": "Gebruikers",
         "loginsLast24H": "Aantekenings (24h)",
-        "failedLoginsLast24H": "Mislukte Aantekenings (24h)"
+        "failedLoginsLast24H": "Mislukte Aantekenings (24h)",
+        "authorizationsLast24H": "Magtigings (24h)"
     },
     "proxmox": {
         "mem": "GEH",
         "cpu": "SVE",
         "lxc": "LXC",
         "vms": "VMe"
+    },
+    "pulse": {
+        "nodes": "Nodusse",
+        "vms": "VMe",
+        "lxcs": "LXCs"
     },
     "glances": {
         "cpu": "SVE",
@@ -754,7 +790,8 @@
         "queue": "Tou",
         "processing": "Verwerking",
         "processed": "Verwerk",
-        "time": "Tyd"
+        "time": "Tyd",
+        "failed": "Failed"
     },
     "firefly": {
         "networth": "Netto Waarde",
@@ -832,6 +869,14 @@
         "books": "Boeke",
         "reading": "Lees",
         "finished": "Klaar"
+    },
+    "bookorbit": {
+        "books": "Books",
+        "authors": "Authors",
+        "series": "Series",
+        "storage": "Storage",
+        "reading": "Reading",
+        "finished": "Finished"
     },
     "jdownloader": {
         "downloadCount": "Tou",
@@ -932,22 +977,38 @@
         "mails": "E-posse",
         "storage": "Stoor plek"
     },
+    "maintainerr": {
+        "itemsHandled": "Items Gehanteer",
+        "episodesHandled": "Episodes Gehanteer",
+        "moviesHandled": "Films Gehanteer",
+        "showsHandled": "Skoue Gehanteer",
+        "seasonsHandled": "Seisoene Gehanteer",
+        "reclaimable": "Herwinbaar",
+        "movieReclaimable": "Film Herwinbaar",
+        "showReclaimable": "Skou Herwinbaar",
+        "totalCapacity": "Totale Kapasitieit"
+    },
+    "netbird": {
+        "online": "Online Peers",
+        "users": "Users",
+        "login_expired": "Login Expired"
+    },
     "netdata": {
         "warnings": "Waarskuwings",
         "criticals": "Kritici"
     },
     "ntfy": {
-        "title": "Title",
-        "priority": "Priority",
-        "lastReceived": "Last Received",
-        "message": "Message",
-        "tags": "Tags",
-        "none": "None",
+        "title": "Titel",
+        "priority": "Prioriteit",
+        "lastReceived": "Laas Ontvang",
+        "message": "Boodskap",
+        "tags": "Merkers",
+        "none": "Geen",
         "min": "Min",
-        "low": "Low",
-        "default": "Default",
-        "high": "High",
-        "urgent": "Urgent"
+        "low": "Laag",
+        "default": "Standaard",
+        "high": "Hoog",
+        "urgent": "Dringend"
     },
     "plantit": {
         "events": "Gebeure",
@@ -1210,5 +1271,19 @@
         "burned": "Verbrand",
         "remaining": "Oorblywende",
         "steps": "Stappe"
+    },
+    "syncthing": {
+        "connected": "Gekoppel",
+        "synced": "Gesinkroniseer",
+        "errors": "Foute",
+        "storage": "Berging"
+    },
+    "sportarr": {
+        "wanted": "Gesoek",
+        "queued": "In ry",
+        "leagues": "Ligas"
+    },
+    "feed": {
+        "noItems": "No items"
     }
 }

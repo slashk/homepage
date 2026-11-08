@@ -9,6 +9,7 @@ import { renderWithProviders } from "test-utils/render-with-providers";
 vi.mock("@headlessui/react", async () => {
   const React = await import("react");
   const { Fragment, createContext, useContext } = React;
+  const ComboboxContext = createContext(null);
   const ListboxContext = createContext(null);
 
   function passthrough({ as: As = "div", children, ...props }) {
@@ -18,9 +19,33 @@ vi.mock("@headlessui/react", async () => {
   }
 
   return {
-    Combobox: passthrough,
-    ComboboxInput: (props) => <input {...props} />,
-    ComboboxOption: passthrough,
+    Combobox: ({ onChange, children }) => (
+      <ComboboxContext.Provider value={{ onChange }}>
+        <div>{children}</div>
+      </ComboboxContext.Provider>
+    ),
+    ComboboxInput: (props) => {
+      const ctx = useContext(ComboboxContext);
+      // real headlessui fires onChange(null) when the input is cleared
+      return (
+        <input
+          {...props}
+          onChange={(event) => {
+            props.onChange?.(event);
+            if (event.target.value === "") ctx?.onChange?.(null);
+          }}
+        />
+      );
+    },
+    ComboboxOption: ({ as: As = "div", value, children, ...props }) => {
+      const ctx = useContext(ComboboxContext);
+      const content = typeof children === "function" ? children({ active: false }) : children;
+      return (
+        <As value={value} onMouseDown={() => ctx?.onChange?.(value)} {...props}>
+          {content}
+        </As>
+      );
+    },
     ComboboxOptions: passthrough,
     Listbox: ({ value, onChange, children, ...props }) => (
       <ListboxContext.Provider value={{ value, onChange }}>
@@ -67,6 +92,21 @@ describe("components/widgets/search", () => {
     fireEvent.keyDown(input, { key: "Enter" });
 
     expect(openSpy).toHaveBeenCalledWith("https://www.google.com/search?q=hello%20world", "_self");
+    openSpy.mockRestore();
+  });
+
+  it("does not search when the input is cleared", () => {
+    const openSpy = vi.spyOn(window, "open").mockImplementation(() => null);
+
+    renderWithProviders(<Search options={{ provider: ["google"], showSearchSuggestions: false, target: "_self" }} />, {
+      settings: {},
+    });
+
+    const input = screen.getByPlaceholderText("search.placeholder");
+    fireEvent.change(input, { target: { value: "a" } });
+    fireEvent.change(input, { target: { value: "" } });
+
+    expect(openSpy).not.toHaveBeenCalled();
     openSpy.mockRestore();
   });
 
@@ -163,6 +203,28 @@ describe("components/widgets/search", () => {
 
     expect(openSpy).toHaveBeenCalledWith("https://example.com/search?q=hello%20world", "_self");
     openSpy.mockRestore();
+  });
+
+  it("gives every provider option an accessible name", () => {
+    renderWithProviders(
+      <Search options={{ provider: ["google", "duckduckgo", "brave"], showSearchSuggestions: false }} />,
+      { settings: {} },
+    );
+
+    expect(screen.getAllByRole("option").map((option) => option.textContent)).toEqual([
+      "Google",
+      "DuckDuckGo",
+      "Brave",
+    ]);
+  });
+
+  it("labels the search input and the provider button", () => {
+    renderWithProviders(<Search options={{ provider: ["google", "duckduckgo"], showSearchSuggestions: false }} />, {
+      settings: {},
+    });
+
+    expect(screen.getByRole("textbox")).toHaveAccessibleName("search.placeholder");
+    expect(screen.getByRole("button")).toHaveAccessibleName(/search\.provider/);
   });
 
   it("fetches search suggestions and triggers a search when a suggestion is selected", async () => {

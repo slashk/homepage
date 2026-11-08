@@ -1,7 +1,7 @@
 import getServiceWidget from "utils/config/service-helpers";
 import createLogger from "utils/logger";
 import { asJson, formatApiCall, sanitizeErrorURL } from "utils/proxy/api-helpers";
-import { addCookieToJar } from "utils/proxy/cookie-jar";
+import { addCookieToJar, setCookieHeader } from "utils/proxy/cookie-jar";
 import { httpProxy } from "utils/proxy/http";
 import widgets from "widgets/widgets";
 
@@ -47,7 +47,14 @@ export default async function frigateProxyHandler(req, res, map) {
         });
 
         if (loginStatus !== 200) {
-          logger.error("HTTP Error %d calling %s", loginStatus, sanitizeErrorURL(loginUrl));
+          const errorURL = new URL(loginUrl);
+          logger.error(
+            "HTTP Error %d calling %s//%s%s...",
+            loginStatus,
+            errorURL.protocol,
+            errorURL.host,
+            errorURL.pathname,
+          );
           return res.status(status).json({
             error: {
               message: `HTTP Error ${status} while trying to login to Frigate`,
@@ -57,12 +64,14 @@ export default async function frigateProxyHandler(req, res, map) {
         }
 
         addCookieToJar(url, loginResponseHeaders);
+        setCookieHeader(url, params, { overwrite: true });
         // Retry original request with cookie set
         [status, , data] = await httpProxy(url, params);
       }
 
       if (status >= 400) {
-        logger.error("HTTP Error %d calling %s", status, sanitizeErrorURL(url));
+        const errorURL = new URL(url);
+        logger.error("HTTP Error %d calling %s//%s%s...", status, errorURL.protocol, errorURL.host, errorURL.pathname);
         return res.status(status).json({
           error: {
             message: `HTTP Error ${status} from Frigate`,

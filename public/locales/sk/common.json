@@ -20,6 +20,9 @@
         "minutes": "m",
         "seconds": "s"
     },
+    "auth": {
+        "signout": "Odhlásiť sa"
+    },
     "widget": {
         "missing_type": "Chýba typ widgetu: {{type}}",
         "api_error": "Chyba API",
@@ -36,7 +39,9 @@
         "wait": "Počkajte prosím"
     },
     "search": {
-        "placeholder": "Hľadať…"
+        "placeholder": "Hľadať…",
+        "provider": "Vyhľadávač: {{name}}",
+        "select_provider": "Vyberte vyhľadávač"
     },
     "resources": {
         "cpu": "CPU",
@@ -67,9 +72,18 @@
         "empty_data": "Stav podsystému neznámy"
     },
     "unifi_drive": {
-        "healthy": "Healthy",
+        "healthy": "Zdravý",
         "degraded": "Degraded",
         "no_data": "No storage data available"
+    },
+    "duplicati": {
+        "jobs": "Úlohy",
+        "stored": "Uložené",
+        "lastBackup": "Naposledy spustené",
+        "nextRun": "Nasledujúce spustenie",
+        "running": "Spustené",
+        "warnings": "Upozornenia",
+        "errors": "Chyby"
     },
     "docker": {
         "rx": "Prijaté",
@@ -85,7 +99,12 @@
         "unhealthy": "Nezdravý",
         "not_found": "Nenájdené",
         "exited": "Ukončené",
-        "partial": "Čiastočný"
+        "partial": "Čiastočný",
+        "created": "Vytvorené",
+        "paused": "Pozastavené",
+        "restarting": "Reštartuje sa",
+        "removing": "Odstraňuje sa",
+        "dead": "Mŕtve"
     },
     "ping": {
         "error": "Chyba",
@@ -120,7 +139,8 @@
         "movies": "Filmov",
         "series": "Seriálov",
         "episodes": "Epizód",
-        "songs": "Skladieb"
+        "songs": "Skladieb",
+        "albums": "Albumov"
     },
     "esphome": {
         "offline": "Nedostupné",
@@ -235,6 +255,16 @@
         "upload": "Nahrávanie",
         "leech": "Leech",
         "seed": "Seed"
+    },
+    "qui": {
+        "leech": "Leech",
+        "download": "Download",
+        "seed": "Seed",
+        "upload": "Upload",
+        "total": "Total",
+        "errored": "Errored",
+        "ratio": "Ratio",
+        "freeSpace": "Free"
     },
     "qnap": {
         "cpuUsage": "Využitie CPU",
@@ -458,13 +488,19 @@
     "authentik": {
         "users": "Používateľov",
         "loginsLast24H": "Prihlás. (24 hod.)",
-        "failedLoginsLast24H": "Neúspešné prihlás. (24 hod.)"
+        "failedLoginsLast24H": "Neúspešné prihlás. (24 hod.)",
+        "authorizationsLast24H": "Auths (24h)"
     },
     "proxmox": {
         "mem": "RAM",
         "cpu": "CPU",
         "lxc": "LXC",
         "vms": "Virtuálne stroje"
+    },
+    "pulse": {
+        "nodes": "Uzly",
+        "vms": "Virtuálne stroje",
+        "lxcs": "LXC"
     },
     "glances": {
         "cpu": "CPU",
@@ -754,7 +790,8 @@
         "queue": "Poradie",
         "processing": "Processing",
         "processed": "Spracované",
-        "time": "Čas"
+        "time": "Čas",
+        "failed": "Failed"
     },
     "firefly": {
         "networth": "Net Worth",
@@ -830,6 +867,14 @@
     "booklore": {
         "libraries": "Libraries",
         "books": "Books",
+        "reading": "Reading",
+        "finished": "Finished"
+    },
+    "bookorbit": {
+        "books": "Books",
+        "authors": "Authors",
+        "series": "Series",
+        "storage": "Úložisko",
         "reading": "Reading",
         "finished": "Finished"
     },
@@ -931,6 +976,22 @@
         "mailboxes": "Mailboxes",
         "mails": "Mails",
         "storage": "Úložisko"
+    },
+    "maintainerr": {
+        "itemsHandled": "Items Handled",
+        "episodesHandled": "Episodes Handled",
+        "moviesHandled": "Movies Handled",
+        "showsHandled": "Shows Handled",
+        "seasonsHandled": "Seasons Handled",
+        "reclaimable": "Reclaimable",
+        "movieReclaimable": "Movie Reclaimable",
+        "showReclaimable": "Show Reclaimable",
+        "totalCapacity": "Celková kapacita"
+    },
+    "netbird": {
+        "online": "Online Peers",
+        "users": "Users",
+        "login_expired": "Login Expired"
     },
     "netdata": {
         "warnings": "Upozornenia",
@@ -1210,5 +1271,19 @@
         "burned": "Burned",
         "remaining": "Remaining",
         "steps": "Steps"
+    },
+    "syncthing": {
+        "connected": "Pripojené",
+        "synced": "Synchronizované",
+        "errors": "Chyby",
+        "storage": "Úložisko"
+    },
+    "sportarr": {
+        "wanted": "Wanted",
+        "queued": "V poradí",
+        "leagues": "Leagues"
+    },
+    "feed": {
+        "noItems": "Žiadne položky"
     }
 }

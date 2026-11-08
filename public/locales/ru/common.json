@@ -20,6 +20,9 @@
         "minutes": "мин",
         "seconds": "сек"
     },
+    "auth": {
+        "signout": "Выход"
+    },
     "widget": {
         "missing_type": "Отсутствует тип виджета: {{type}}",
         "api_error": "Ошибка API",
@@ -36,7 +39,9 @@
         "wait": "Пожалуйста, подождите"
     },
     "search": {
-        "placeholder": "Поиск…"
+        "placeholder": "Поиск…",
+        "provider": "Поисковая система: {{name}}",
+        "select_provider": "Выберите поисковую систему"
     },
     "resources": {
         "cpu": "ЦП",
@@ -67,9 +72,18 @@
         "empty_data": "Статус подсистемы неизвестен"
     },
     "unifi_drive": {
-        "healthy": "Здоров",
+        "healthy": "Исправен",
         "degraded": "Деградация",
         "no_data": "Нет доступных данных о хранилище"
+    },
+    "duplicati": {
+        "jobs": "Работы",
+        "stored": "Сохранено",
+        "lastBackup": "Последний запуск",
+        "nextRun": "Следующий запуск",
+        "running": "Запущено",
+        "warnings": "Предупреждения",
+        "errors": "Ошибки"
     },
     "docker": {
         "rx": "RX",
@@ -85,7 +99,12 @@
         "unhealthy": "Нездоровый",
         "not_found": "Не найдено",
         "exited": "Вышел",
-        "partial": "Частичный"
+        "partial": "Частичный",
+        "created": "Создан",
+        "paused": "Приостановлен",
+        "restarting": "Перезапуск",
+        "removing": "Удаление",
+        "dead": "Мёртв"
     },
     "ping": {
         "error": "Ошибка",
@@ -120,7 +139,8 @@
         "movies": "Фильмы",
         "series": "Сериалы",
         "episodes": "Эпизоды",
-        "songs": "Песни"
+        "songs": "Песни",
+        "albums": "Альбомы"
     },
     "esphome": {
         "offline": "Не в сети",
@@ -222,19 +242,29 @@
     "rutorrent": {
         "active": "Активно",
         "upload": "Отдача",
-        "download": "Скачивание"
+        "download": "Загрузка"
     },
     "transmission": {
-        "download": "Скачивание",
+        "download": "Загрузка",
         "upload": "Отдача",
         "leech": "Лич",
         "seed": "Сид"
     },
     "qbittorrent": {
-        "download": "Скачивание",
-        "upload": "Загрузка",
+        "download": "Загрузка",
+        "upload": "Отдача",
         "leech": "Лич",
         "seed": "Сид"
+    },
+    "qui": {
+        "leech": "Лич",
+        "download": "Скачивание",
+        "seed": "Сид",
+        "upload": "Загрузка",
+        "total": "Всего",
+        "errored": "Ошибок",
+        "ratio": "Соотношение",
+        "freeSpace": "Свободно"
     },
     "qnap": {
         "cpuUsage": "Использование ЦП",
@@ -245,8 +275,8 @@
         "invalid": "Некорректный"
     },
     "deluge": {
-        "download": "Скачивание",
-        "upload": "Загрузка",
+        "download": "Загрузка",
+        "upload": "Отдача",
         "leech": "Лич",
         "seed": "Сид"
     },
@@ -255,8 +285,8 @@
         "cachemissbytes": "Мисс байты кэша"
     },
     "downloadstation": {
-        "download": "Скачивание",
-        "upload": "Загрузка",
+        "download": "Загрузка",
+        "upload": "Отдача",
         "leech": "Лич",
         "seed": "Сид"
     },
@@ -321,8 +351,8 @@
         "latency": "Задержка"
     },
     "speedtest": {
-        "upload": "Загрузка",
-        "download": "Скачивание",
+        "upload": "Отдача",
+        "download": "Загрузка",
         "ping": "Пинг"
     },
     "portainer": {
@@ -432,7 +462,7 @@
         "numActiveSessions": "Сессии",
         "numConnections": "Соединения",
         "dataRelayed": "Ретранслировано",
-        "transferRate": "Rate"
+        "transferRate": "Цена"
     },
     "mastodon": {
         "user_count": "Пользователи",
@@ -458,13 +488,19 @@
     "authentik": {
         "users": "Пользователи",
         "loginsLast24H": "Входы (24ч)",
-        "failedLoginsLast24H": "Неудачные входы (24ч)"
+        "failedLoginsLast24H": "Неудачные входы (24ч)",
+        "authorizationsLast24H": "Входы (24ч)"
     },
     "proxmox": {
         "mem": "Память",
         "cpu": "ЦП",
         "lxc": "LXC",
         "vms": "Виртуальные машины"
+    },
+    "pulse": {
+        "nodes": "Узлы",
+        "vms": "Виртуальные машины",
+        "lxcs": "Контейнеры LXC"
     },
     "glances": {
         "cpu": "ЦП",
@@ -563,7 +599,7 @@
         "up": "В сети",
         "pending": "Ожидают",
         "down": "Не в сети",
-        "ok": "Ok"
+        "ok": "OK"
     },
     "healthchecks": {
         "new": "Новый",
@@ -631,7 +667,7 @@
         "total": "Всего"
     },
     "pangolin": {
-        "orgs": "Orgs",
+        "orgs": "Организации",
         "sites": "Сайты",
         "resources": "Ресурсы",
         "targets": "Цели",
@@ -669,7 +705,7 @@
         "limit": "Лимит"
     },
     "opnsense": {
-        "cpu": "ЦП",
+        "cpu": "Нагрузка ЦП",
         "memory": "Активно ОЗУ",
         "wanUpload": "WAN Загрузка",
         "wanDownload": "WAN скачивание"
@@ -754,7 +790,8 @@
         "queue": "Очередь",
         "processing": "Обрабатывается",
         "processed": "Обработано",
-        "time": "Время"
+        "time": "Время",
+        "failed": "Неудачно"
     },
     "firefly": {
         "networth": "Общая средства",
@@ -804,7 +841,7 @@
         "gross_percent_today": "Сегодня",
         "gross_percent_1y": "Один год",
         "gross_percent_max": "Все время",
-        "net_worth": "Net Worth"
+        "net_worth": "Общая стоимость"
     },
     "audiobookshelf": {
         "podcasts": "Подкасты",
@@ -831,6 +868,14 @@
         "libraries": "Библиотеки",
         "books": "Книги",
         "reading": "Читаю",
+        "finished": "Завершено"
+    },
+    "bookorbit": {
+        "books": "Книги",
+        "authors": "Авторы",
+        "series": "Серии",
+        "storage": "Память",
+        "reading": "Чтение",
         "finished": "Завершено"
     },
     "jdownloader": {
@@ -932,6 +977,22 @@
         "mails": "Письма",
         "storage": "Хранилище"
     },
+    "maintainerr": {
+        "itemsHandled": "Элементы обрабатываются",
+        "episodesHandled": "Серии обрабатываются",
+        "moviesHandled": "Фильмы обрабатываются",
+        "showsHandled": "Шоу обрабатываются",
+        "seasonsHandled": "Сезоны обрабатываются",
+        "reclaimable": "Восстановленные",
+        "movieReclaimable": "Восстановленный фильм",
+        "showReclaimable": "Восстановленное шоу",
+        "totalCapacity": "Общая ёмкость"
+    },
+    "netbird": {
+        "online": "Online Peers",
+        "users": "Users",
+        "login_expired": "Login Expired"
+    },
     "netdata": {
         "warnings": "Предупреждения",
         "criticals": "Критические"
@@ -939,7 +1000,7 @@
     "ntfy": {
         "title": "Название",
         "priority": "Приоритет",
-        "lastReceived": "Last Received",
+        "lastReceived": "Последние полученные",
         "message": "Сообщение",
         "tags": "Теги",
         "none": "Отсутствует",
@@ -1076,7 +1137,7 @@
         "apps": "Приложения",
         "synced": "Синхронизированные",
         "outOfSync": "Не синхронизированные",
-        "healthy": "Healthy",
+        "healthy": "Здоров",
         "degraded": "Деградированные",
         "progressing": "Выполняются",
         "missing": "Отсутствует",
@@ -1123,18 +1184,18 @@
         "other": "Другое"
     },
     "checkmk": {
-        "serviceErrors": "Service issues",
-        "hostErrors": "Host issues"
+        "serviceErrors": "Проблемы сервиса",
+        "hostErrors": "Проблемы узла"
     },
     "komodo": {
         "total": "Всего",
         "running": "Запущено",
         "stopped": "Остановлено",
         "down": "Не в сети",
-        "unhealthy": "Unhealthy",
+        "unhealthy": "Неисправен",
         "unknown": "Неизвестно",
         "servers": "Серверы",
-        "stacks": "Stacks",
+        "stacks": "Стеки",
         "containers": "Контейнеры"
     },
     "filebrowser": {
@@ -1157,7 +1218,7 @@
         "DISABLE_DISK": "Диск отключен",
         "SWAP_DSBL": "Swap отключён",
         "INVALID_EXPANSION": "Неверное Расширение",
-        "PARITY_NOT_BIGGEST": "Parity Not Biggest",
+        "PARITY_NOT_BIGGEST": "Четность не наибольшая",
         "TOO_MANY_MISSING_DISKS": "Слишком много отсутствующих дисков",
         "NEW_DISK_TOO_SMALL": "Новый диск слишком мал",
         "NO_DATA_DISKS": "Нет дисков данных",
@@ -1166,18 +1227,18 @@
         "cpu": "ЦП",
         "memoryUsed": "Использовано ОЗУ",
         "memoryAvailable": "Доступная память",
-        "arrayUsed": "Array Used",
-        "arrayFree": "Array Free",
+        "arrayUsed": "Используемый массив",
+        "arrayFree": "Свободный массив",
         "poolUsed": "{{pool}} Использовано",
         "poolFree": "{{pool}} Свободно"
     },
     "backrest": {
-        "num_plans": "Plans",
-        "num_success_30": "Successes",
+        "num_plans": "Планы",
+        "num_success_30": "Успешные",
         "num_failure_30": "Ошибки",
-        "num_success_latest": "Succeeding",
-        "num_failure_latest": "Failing",
-        "bytes_added_30": "Bytes Added"
+        "num_success_latest": "Успешно",
+        "num_failure_latest": "Неудачные",
+        "bytes_added_30": "Байты добавлены"
     },
     "yourspotify": {
         "songs": "Треков",
@@ -1206,9 +1267,23 @@
         "environment_not_found": "Среда не найдена"
     },
     "sparkyfitness": {
-        "eaten": "Eaten",
-        "burned": "Burned",
-        "remaining": "Remaining",
-        "steps": "Steps"
+        "eaten": "Съедено",
+        "burned": "Сожжено",
+        "remaining": "Осталось",
+        "steps": "Шаги"
+    },
+    "syncthing": {
+        "connected": "Подключено",
+        "synced": "Синхронизировано",
+        "errors": "Ошибки",
+        "storage": "Хранилище"
+    },
+    "sportarr": {
+        "wanted": "Требуется",
+        "queued": "В очереди",
+        "leagues": "Лиги"
+    },
+    "feed": {
+        "noItems": "Ничего нет"
     }
 }

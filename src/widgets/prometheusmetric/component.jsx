@@ -1,7 +1,7 @@
+import { useTranslation } from "next-i18next/pages";
+
 import Block from "components/services/widget/block";
 import Container from "components/services/widget/container";
-import { useTranslation } from "next-i18next";
-
 import useWidgetAPI from "utils/proxy/use-widget-api";
 
 function formatValue(t, metric, rawValue) {
@@ -52,25 +52,22 @@ export default function Component({ service }) {
 
   const { widget } = service;
 
-  const { metrics = [], refreshInterval = 10000 } = widget;
+  const { metrics: allMetrics = [], refreshInterval = 10000 } = widget;
+  const metrics = allMetrics.slice(0, 4);
 
-  let prometheusmetricError;
+  const metricResults = metrics.map((metric) => {
+    // disable the rule that hooks should not be called from a callback,
+    // because we don't need a strong guarantee of hook execution order here.
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { data, error } = useWidgetAPI(widget, "query", {
+      query: metric.query,
+      refreshInterval: Math.max(1000, metric.refreshInterval ?? refreshInterval),
+    });
+    return { key: metric.key ?? metric.label, data, error };
+  });
 
-  const prometheusmetricData = new Map(
-    metrics.slice(0, 4).map((metric) => {
-      // disable the rule that hooks should not be called from a callback,
-      // because we don't need a strong guarantee of hook execution order here.
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const { data: resultData, error: resultError } = useWidgetAPI(widget, "query", {
-        query: metric.query,
-        refreshInterval: Math.max(1000, metric.refreshInterval ?? refreshInterval),
-      });
-      if (resultError) {
-        prometheusmetricError = resultError;
-      }
-      return [metric.key ?? metric.label, resultData];
-    }),
-  );
+  const prometheusmetricError = metricResults.find(({ error }) => error)?.error;
+  const prometheusmetricData = new Map(metricResults.map(({ key, data }) => [key, data]));
 
   if (prometheusmetricError) {
     return <Container service={service} error={prometheusmetricError} />;
@@ -79,7 +76,7 @@ export default function Component({ service }) {
   if (!prometheusmetricData) {
     return (
       <Container service={service}>
-        {metrics.slice(0, 4).map((item) => (
+        {metrics.map((item) => (
           <Block label={item.label} key={item.label} />
         ))}
       </Container>

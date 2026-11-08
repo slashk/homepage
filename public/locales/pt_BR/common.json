@@ -20,9 +20,12 @@
         "minutes": "m",
         "seconds": "s"
     },
+    "auth": {
+        "signout": "Encerrar Sessão"
+    },
     "widget": {
         "missing_type": "Tipo de Widget ausente: {{type}}",
-        "api_error": "Erros de API",
+        "api_error": "Erro da API",
         "information": "Informação",
         "status": "Status",
         "url": "Endereço URL",
@@ -36,7 +39,9 @@
         "wait": "Por favor, aguarde"
     },
     "search": {
-        "placeholder": "Pesquisar…"
+        "placeholder": "Pesquisar…",
+        "provider": "Motor de pesquisa: {{name}}",
+        "select_provider": "Selecionar motor de busca"
     },
     "resources": {
         "cpu": "CPU",
@@ -71,6 +76,15 @@
         "degraded": "Degradado",
         "no_data": "Sem dados de armazenamento disponíveis"
     },
+    "duplicati": {
+        "jobs": "Trabalhos",
+        "stored": "Armazenado",
+        "lastBackup": "Última corrida",
+        "nextRun": "Próxima corrida",
+        "running": "Correndo",
+        "warnings": "Avisos",
+        "errors": "Erros"
+    },
     "docker": {
         "rx": "RX",
         "tx": "TX",
@@ -85,7 +99,12 @@
         "unhealthy": "Não-saudável",
         "not_found": "Não Encontrado",
         "exited": "Encerrado",
-        "partial": "Parcial"
+        "partial": "Parcial",
+        "created": "Criado",
+        "paused": "Pausado",
+        "restarting": "Reiniciando",
+        "removing": "Removendo",
+        "dead": "Inativo"
     },
     "ping": {
         "error": "Erro",
@@ -120,7 +139,8 @@
         "movies": "Filmes",
         "series": "Séries",
         "episodes": "Episódios",
-        "songs": "Músicas"
+        "songs": "Músicas",
+        "albums": "Álbuns"
     },
     "esphome": {
         "offline": "Offline",
@@ -236,6 +256,16 @@
         "leech": "Leech",
         "seed": "Seed"
     },
+    "qui": {
+        "leech": "Leech",
+        "download": "Download",
+        "seed": "Seed",
+        "upload": "Upload",
+        "total": "Total",
+        "errored": "Errored",
+        "ratio": "Ratio",
+        "freeSpace": "Free"
+    },
     "qnap": {
         "cpuUsage": "Uso de CPU",
         "memUsage": "Uso de Memória",
@@ -344,16 +374,16 @@
         "address": "Endereço",
         "expires": "Expira em",
         "never": "Nunca",
-        "user": "User",
-        "hostname": "Hostname",
-        "name": "Name",
-        "client_version": "Client Version",
-        "os": "OS",
-        "created": "Created",
-        "authorized": "Authorized",
-        "is_external": "Is External",
-        "update_available": "Update Available",
-        "tags": "Tags",
+        "user": "Usuário",
+        "hostname": "Nome do host",
+        "name": "Nome",
+        "client_version": "Versão do cliente",
+        "os": "SO",
+        "created": "Criado",
+        "authorized": "Autorizado",
+        "is_external": "É Externo",
+        "update_available": "Atualização disponível",
+        "tags": "Marcadores",
         "last_seen": "Visto por último",
         "now": "Agora",
         "years": "{{number}}a",
@@ -363,8 +393,8 @@
         "minutes": "{{number}}m",
         "seconds": "{{number}}s",
         "ago": "{{value}} Atrás",
-        "true": "Yes",
-        "false": "No"
+        "true": "Sim",
+        "false": "Não"
     },
     "technitium": {
         "totalQueries": "Consultas",
@@ -458,13 +488,19 @@
     "authentik": {
         "users": "Usuários",
         "loginsLast24H": "Inícios de sessão (24h)",
-        "failedLoginsLast24H": "Inícios de sessão falhados (24h)"
+        "failedLoginsLast24H": "Inícios de sessão falhados (24h)",
+        "authorizationsLast24H": "Auths (24h)"
     },
     "proxmox": {
         "mem": "MEM",
         "cpu": "CPU",
         "lxc": "LXC",
         "vms": "VMs"
+    },
+    "pulse": {
+        "nodes": "Nodes",
+        "vms": "VMs",
+        "lxcs": "LXCs"
     },
     "glances": {
         "cpu": "CPU",
@@ -754,7 +790,8 @@
         "queue": "Fila de espera",
         "processing": "Processando",
         "processed": "Processado",
-        "time": "Hora"
+        "time": "Hora",
+        "failed": "Failed"
     },
     "firefly": {
         "networth": "Valor Líquido",
@@ -832,6 +869,14 @@
         "books": "Livros",
         "reading": "Lendo",
         "finished": "Finalizado"
+    },
+    "bookorbit": {
+        "books": "Books",
+        "authors": "Authors",
+        "series": "Series",
+        "storage": "Storage",
+        "reading": "Reading",
+        "finished": "Finished"
     },
     "jdownloader": {
         "downloadCount": "Fila de espera",
@@ -932,22 +977,38 @@
         "mails": "Mensagens",
         "storage": "Armazenamento"
     },
+    "maintainerr": {
+        "itemsHandled": "Itens manuseados",
+        "episodesHandled": "Episódios tratados",
+        "moviesHandled": "Filmes tratados",
+        "showsHandled": "Séries tratados",
+        "seasonsHandled": "Temporadas tratadas",
+        "reclaimable": "Reclamável",
+        "movieReclaimable": "Filme Reclamável",
+        "showReclaimable": "Show Reclamável",
+        "totalCapacity": "Capacidade total"
+    },
+    "netbird": {
+        "online": "Online Peers",
+        "users": "Users",
+        "login_expired": "Login Expired"
+    },
     "netdata": {
         "warnings": "Alertas",
         "criticals": "Críticos"
     },
     "ntfy": {
-        "title": "Title",
-        "priority": "Priority",
-        "lastReceived": "Last Received",
-        "message": "Message",
-        "tags": "Tags",
-        "none": "None",
-        "min": "Min",
-        "low": "Low",
-        "default": "Default",
-        "high": "High",
-        "urgent": "Urgent"
+        "title": "Título",
+        "priority": "Prioridade",
+        "lastReceived": "Atualização mais recente em",
+        "message": "Mensagem",
+        "tags": "Marcadores",
+        "none": "Nenhum",
+        "min": "Mín",
+        "low": "Baixo",
+        "default": "Padrão",
+        "high": "Alto",
+        "urgent": "Urgente"
     },
     "plantit": {
         "events": "Eventos",
@@ -1210,5 +1271,19 @@
         "burned": "Queimado",
         "remaining": "Restante",
         "steps": "Passos"
+    },
+    "syncthing": {
+        "connected": "Conectado",
+        "synced": "Sincronizado",
+        "errors": "Erros",
+        "storage": "Armazenagem"
+    },
+    "sportarr": {
+        "wanted": "Desejado",
+        "queued": "Na fila",
+        "leagues": "Ligas"
+    },
+    "feed": {
+        "noItems": "No items"
     }
 }

@@ -12,6 +12,7 @@ import backrest from "./backrest/widget";
 import bazarr from "./bazarr/widget";
 import beszel from "./beszel/widget";
 import booklore from "./booklore/widget";
+import bookorbit from "./bookorbit/widget";
 import caddy from "./caddy/widget";
 import calendar from "./calendar/widget";
 import calibreweb from "./calibreweb/widget";
@@ -28,9 +29,11 @@ import diskstation from "./diskstation/widget";
 import dispatcharr from "./dispatcharr/widget";
 import dockhand from "./dockhand/widget";
 import downloadstation from "./downloadstation/widget";
+import duplicati from "./duplicati/widget";
 import emby from "./emby/widget";
 import esphome from "./esphome/widget";
 import evcc from "./evcc/widget";
+import feed from "./feed/widget";
 import filebrowser from "./filebrowser/widget";
 import fileflows from "./fileflows/widget";
 import firefly from "./firefly/widget";
@@ -67,6 +70,7 @@ import lidarr from "./lidarr/widget";
 import linkwarden from "./linkwarden/widget";
 import lubelogger from "./lubelogger/widget";
 import mailcow from "./mailcow/widget";
+import maintainerr from "./maintainerr/widget";
 import mastodon from "./mastodon/widget";
 import mealie from "./mealie/widget";
 import medusa from "./medusa/widget";
@@ -79,6 +83,7 @@ import mylar from "./mylar/widget";
 import myspeed from "./myspeed/widget";
 import navidrome from "./navidrome/widget";
 import netalertx from "./netalertx/widget";
+import netbird from "./netbird/widget";
 import netdata from "./netdata/widget";
 import nextcloud from "./nextcloud/widget";
 import nextdns from "./nextdns/widget";
@@ -107,9 +112,11 @@ import prowlarr from "./prowlarr/widget";
 import proxmox from "./proxmox/widget";
 import proxmoxbackupserver from "./proxmoxbackupserver/widget";
 import pterodactyl from "./pterodactyl/widget";
+import pulse from "./pulse/widget";
 import pyload from "./pyload/widget";
 import qbittorrent from "./qbittorrent/widget";
 import qnap from "./qnap/widget";
+import qui from "./qui/widget";
 import radarr from "./radarr/widget";
 import readarr from "./readarr/widget";
 import romm from "./romm/widget";
@@ -123,11 +130,13 @@ import sonarr from "./sonarr/widget";
 import sparkyfitness from "./sparkyfitness/widget";
 import speedtest from "./speedtest/widget";
 import spoolman from "./spoolman/widget";
+import sportarr from "./sportarr/widget";
 import stash from "./stash/widget";
 import stocks from "./stocks/widget";
 import strelaysrv from "./strelaysrv/widget";
 import suwayomi from "./suwayomi/widget";
 import swagdashboard from "./swagdashboard/widget";
+import syncthing from "./syncthing/widget";
 import tailscale from "./tailscale/widget";
 import tandoor from "./tandoor/widget";
 import tautulli from "./tautulli/widget";
@@ -169,6 +178,7 @@ const widgets = {
   backrest,
   bazarr,
   booklore,
+  bookorbit,
   beszel,
   caddy,
   calibreweb,
@@ -182,12 +192,14 @@ const widgets = {
   deluge,
   develancacheui,
   diskstation,
+  duplicati,
   dispatcharr,
   dockhand,
   downloadstation,
   emby,
   esphome,
   evcc,
+  feed,
   filebrowser,
   fileflows,
   firefly,
@@ -227,6 +239,7 @@ const widgets = {
   linkwarden,
   lubelogger,
   mailcow,
+  maintainerr,
   mastodon,
   mealie,
   medusa,
@@ -239,6 +252,7 @@ const widgets = {
   myspeed,
   navidrome,
   netalertx,
+  netbird,
   netdata,
   nextcloud,
   nextdns,
@@ -269,9 +283,11 @@ const widgets = {
   prowlarr,
   proxmox,
   pterodactyl,
+  pulse,
   pyload,
   qbittorrent,
   qnap,
+  qui,
   radarr,
   readarr,
   romm,
@@ -285,11 +301,13 @@ const widgets = {
   sparkyfitness,
   speedtest,
   spoolman,
+  sportarr,
   stash,
   stocks,
   strelaysrv,
   swagdashboard,
   suwayomi,
+  syncthing,
   tailscale,
   tandoor,
   tautulli,

@@ -3,6 +3,8 @@ title: Custom API
 description: Custom Widget Configuration from the API
 ---
 
+_(Find the Custom API information widget [here](../info/customapi.md))_
+
 This widget can show information from custom self-hosted or third party API.
 
 Fields need to be defined in the `mappings` section YAML object to correlate with the value in the APIs JSON object. Final field definition needs to be the key with the desired value information.
@@ -145,6 +147,10 @@ The widget supports different display modes that can be set using the `display` 
 ### Block View (Default)
 
 The default display mode is `block`, which shows fields in a block format.
+
+!!! note
+
+    The Custom API widget does not currently support [block highlighting](../../configs/services.md#block-highlighting) in any display mode.
 
 ### List View
 

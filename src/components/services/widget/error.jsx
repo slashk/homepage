@@ -1,4 +1,4 @@
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next/pages";
 import { IoAlertCircle } from "react-icons/io5";
 
 function displayError(error) {
@@ -13,13 +13,13 @@ export default function Error({ error }) {
   const { t } = useTranslation();
 
   if (typeof error === "string") {
-    error = { message: error }; // eslint-disable-line no-param-reassign
+    error = { message: error };
   } else if (typeof error === "number") {
-    error = { message: `Error ${error}` }; // eslint-disable-line no-param-reassign
+    error = { message: `Error ${error}` };
   }
 
   if (error?.data?.error) {
-    error = error.data.error; // eslint-disable-line no-param-reassign
+    error = error.data.error;
   }
 
   return (

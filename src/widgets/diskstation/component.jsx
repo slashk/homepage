@@ -1,7 +1,7 @@
+import { useTranslation } from "next-i18next/pages";
+
 import Block from "components/services/widget/block";
 import Container from "components/services/widget/container";
-import { useTranslation } from "next-i18next";
-
 import useWidgetAPI from "utils/proxy/use-widget-api";
 
 export default function Component({ service }) {
@@ -27,7 +27,6 @@ export default function Component({ service }) {
   }
 
   // uptime info
-  // eslint-disable-next-line no-unused-vars
   const [hour, minutes, seconds] = infoData.data.up_time.split(":");
   const days = Math.floor(hour / 24);
   const uptime = `${t("common.number", { value: days })} ${t("diskstation.days")}`;

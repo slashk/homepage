@@ -1,4 +1,4 @@
-import { asJson, jsonArrayFilter } from "utils/proxy/api-helpers";
+import { asJson } from "utils/proxy/api-helpers";
 import genericProxyHandler from "utils/proxy/handlers/generic";
 
 const widget = {
@@ -8,15 +8,18 @@ const widget = {
   mappings: {
     movie: {
       endpoint: "movie",
-      map: (data) => ({
-        wanted: jsonArrayFilter(data, (item) => item.monitored && !item.hasFile && item.isAvailable).length,
-        have: jsonArrayFilter(data, (item) => item.hasFile).length,
-        missing: jsonArrayFilter(data, (item) => item.monitored && !item.hasFile).length,
-        all: asJson(data).map((entry) => ({
-          title: entry.title,
-          id: entry.id,
-        })),
-      }),
+      map: (data) => {
+        const movieData = asJson(data) ?? [];
+        return {
+          wanted: movieData.filter((item) => item.monitored && !item.hasFile && item.isAvailable).length,
+          have: movieData.filter((item) => item.hasFile).length,
+          missing: movieData.filter((item) => item.monitored && !item.hasFile).length,
+          all: movieData.map((entry) => ({
+            title: entry.title,
+            id: entry.id,
+          })),
+        };
+      },
     },
     "queue/status": {
       endpoint: "queue/status",
@@ -36,8 +39,8 @@ const widget = {
             status: entry.status,
           }))
           .sort((a, b) => {
-            const downloadingA = a.trackedDownloadState === "downloading";
-            const downloadingB = b.trackedDownloadState === "downloading";
+            const downloadingA = (a.status ?? a.trackedDownloadState) === "downloading";
+            const downloadingB = (b.status ?? b.trackedDownloadState) === "downloading";
             if (downloadingA && !downloadingB) {
               return -1;
             }
@@ -45,8 +48,8 @@ const widget = {
               return 1;
             }
 
-            const percentA = a.sizeLeft / a.size;
-            const percentB = b.sizeLeft / b.size;
+            const percentA = a.size > 0 ? a.sizeLeft / a.size : 1;
+            const percentB = b.size > 0 ? b.sizeLeft / b.size : 1;
             if (percentA < percentB) {
               return -1;
             }

@@ -1,14 +1,13 @@
+import { useTranslation } from "next-i18next/pages";
+
 import Block from "components/services/widget/block";
 import Container from "components/services/widget/container";
-import { useTranslation } from "next-i18next";
-
 import useWidgetAPI from "utils/proxy/use-widget-api";
 
 export default function Component({ service }) {
   const { t } = useTranslation();
   const { widget } = service;
 
-  // eslint-disable-next-line prefer-const
   let { data: spoolData, error: spoolError } = useWidgetAPI(widget, "spools");
 
   if (spoolError) {
@@ -20,7 +19,6 @@ export default function Component({ service }) {
     return (
       <Container service={service}>
         {[...Array(nBlocksGuess)].map((_, i) => (
-          // eslint-disable-next-line react/no-array-index-key
           <Block key={i} label="spoolman.loading" />
         ))}
       </Container>

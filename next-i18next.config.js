@@ -106,6 +106,12 @@ function relativeDate(date, formatter) {
   const unitIndex = cutoffs.findIndex((cutoff) => cutoff > Math.abs(delta));
   const divisor = unitIndex ? cutoffs[unitIndex - 1] : 1;
 
+  if (units[unitIndex] === "day") {
+    // compare calendar days, not elapsed 24h blocks
+    const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    return formatter.format(Math.round((startOfDay(date) - startOfDay(new Date())) / 86400000), "day");
+  }
+
   return formatter.format(Math.floor(delta / divisor), units[unitIndex]);
 }
 
@@ -115,6 +121,8 @@ module.exports = {
     locales: ["en"],
   },
   serializeConfig: false,
+  // see https://github.com/i18next/i18next/issues/2227
+  cacheInBuiltFormats: false,
   use: [
     {
       init: (i18next) => {
@@ -136,7 +144,7 @@ module.exports = {
 
           const dm = options.decimals ? options.decimals : 0;
 
-          const i = options.binary ? 2 : Math.floor(Math.log(value) / Math.log(k));
+          const i = Math.floor(Math.log(value) / Math.log(k));
 
           const formatted = new Intl.NumberFormat(lng, { maximumFractionDigits: dm, minimumFractionDigits: dm }).format(
             parseFloat(value / k ** i),

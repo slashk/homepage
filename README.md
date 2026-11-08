@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  A modern, <em>fully static, fast</em>, secure <em>fully proxied</em>, highly customizable application dashboard with integrations for over 100 services and translations into multiple languages. Easily configured via YAML files or through docker label discovery.
+  A modern, <em>fast</em>, secure <em>fully proxied</em>, highly customizable application dashboard with integrations for over 100 services and translations into multiple languages. Easily configured via YAML files or through docker label discovery.
 </p>
 
 <p align="center">
@@ -46,7 +46,7 @@ Feel free to add a PR for new widgets -- we like new widgets.
 
 With features like quick search, bookmarks, weather support, a wide range of integrations and widgets, an elegant and modern design, and a focus on performance, Homepage is your ideal start to the day and a handy companion throughout it.
 
-- **Fast** - The site is statically generated at build time for instant load times.
+- **Fast** - Cached dashboard data and optimized assets keep page loads quick.
 - **Secure** - All API requests to backend services are proxied, keeping your API keys hidden. Constantly reviewed for security by the community.
 - **For Everyone** - Images built for AMD64, ARM64.
 - **Full i18n** - Support for over 40 languages.
@@ -78,7 +78,10 @@ For configuration options, examples and more, [please check out the homepage doc
 
 ## Security Notice 🔒
 
-Please note that when using features such as widgets, Homepage can access personal information (for example from your home automation system) and Homepage currently does not (and is not planned to) include any authentication layer itself. If Homepage is reachable from any untrusted network, it **must** sit behind a reverse proxy (and/or VPN) that enforces authentication, TLS, and strictly validates Host headers. The built-in host check in Homepage is a best-effort guard and should not be treated as security when exposed publicly.
+Please note that when using features such as widgets, Homepage can access personal information (for example from your home automation system). To keep your information private, if Homepage is reachable from any untrusted network, it:
+
+1. **must** sit behind a reverse proxy (and/or VPN) that enforces authentication, TLS, and strictly validates Host headers.
+2. An optional built-in OIDC login flow or simple password login is available (opt-in) offering a simple “authenticated or not” guard.
 
 ## With Docker
 
@@ -135,7 +138,7 @@ If this is your first time starting, copy the `src/skeleton` directory to `confi
 Finally, run the server in production mode:
 
 ```bash
-pnpm start
+HOMEPAGE_ALLOWED_HOSTS=gethomepage.dev:1234 pnpm start
 ```
 
 # Configuration

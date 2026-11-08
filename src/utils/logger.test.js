@@ -95,6 +95,9 @@ describe("utils/logger", () => {
     const transports = state.lastCreateLoggerArgs.transports;
     expect(transports).toHaveLength(1);
     expect(transports[0].opts.filename).toBe("/tmp/logs/homepage.log");
+    expect(transports[0].opts.maxsize).toBe(10 * 1024 * 1024);
+    expect(transports[0].opts.maxFiles).toBe(5);
+    expect(transports[0].opts.tailable).toBe(true);
   });
 
   it("defaults to both transports for unknown LOG_TARGETS and patches console methods", async () => {
@@ -169,6 +172,16 @@ describe("utils/logger", () => {
       message: "hello",
     });
     expect(plainMsg).toBe("[t] info: hello");
+
+    const causeMsg = formatter({
+      timestamp: "t",
+      level: "error",
+      label: "x",
+      stack: "STACK",
+      message: "fetch failed",
+      cause: { stack: "CAUSE STACK" },
+    });
+    expect(causeMsg).toBe("[t] error: <x> STACK\ncaused by: CAUSE STACK");
 
     const out = splat.transform(
       {

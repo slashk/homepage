@@ -1,5 +1,6 @@
-import ErrorBoundary from "components/errorboundry";
 import dynamic from "next/dynamic";
+
+import ErrorBoundary from "components/errorboundry";
 
 const widgetMappings = {
   weatherapi: dynamic(() => import("components/widgets/weather/weather")),
@@ -16,6 +17,7 @@ const widgetMappings = {
   kubernetes: dynamic(() => import("components/widgets/kubernetes/kubernetes")),
   stocks: dynamic(() => import("components/widgets/stocks/stocks")),
   rsu: dynamic(() => import("components/widgets/rsu/rsu")),
+  customapi: dynamic(() => import("components/widgets/customapi/customapi")),
 };
 
 export default function Widget({ widget, style }) {

@@ -2,12 +2,12 @@ import { promises as fs } from "fs";
 import path from "path";
 
 import Docker from "dockerode";
-import yaml from "js-yaml";
 
 import checkAndCopyConfig, { CONF_DIR, getSettings, substituteEnvironmentVars } from "utils/config/config";
 import getDockerArguments from "utils/config/docker";
 import { getKubeConfig } from "utils/config/kubernetes";
 import * as shvl from "utils/config/shvl";
+import { loadYaml } from "utils/config/yaml";
 import kubernetes from "utils/kubernetes/export";
 import createLogger from "utils/logger";
 import { parseVersionForUrl } from "utils/proxy/api-helpers";
@@ -56,8 +56,48 @@ export async function servicesFromConfig() {
   const servicesYaml = path.join(CONF_DIR, "services.yaml");
   const rawFileContents = await fs.readFile(servicesYaml, "utf8");
   const fileContents = substituteEnvironmentVars(rawFileContents);
-  const services = yaml.load(fileContents);
+  const services = loadYaml(fileContents);
   return parseServicesToGroups(services);
+}
+
+function flattenServices(groups, services = []) {
+  groups.forEach((group) => {
+    (group.services ?? []).forEach((service) => services.push(service));
+    flattenServices(group.groups ?? [], services);
+  });
+  return services;
+}
+
+function dockerWidgets(service) {
+  const widgets = service.widget ? [service.widget, ...(service.widgets ?? [])] : (service.widgets ?? []);
+  return widgets.filter((widget) => widget?.type === "docker");
+}
+
+export async function containersFromConfig(server) {
+  const target = server || "";
+  const services = flattenServices(await servicesFromConfig());
+  // services and docker widgets both carry container + server
+  const refs = services.flatMap((service) => [service, ...dockerWidgets(service)]);
+  const matching = refs.filter((ref) => ref.container && (ref.server || "") === target);
+
+  return new Set(matching.map((ref) => ref.container));
+}
+
+// homepage.foo -> foo, homepage.instance.<this instance>.foo -> foo, another instance -> null
+export function homepageLabelValue(label, instanceName) {
+  if (!label.startsWith("homepage.")) return null;
+
+  const value = label.replace("homepage.", "");
+  if (!value.startsWith("instance.")) return value;
+  if (instanceName && value.startsWith(`instance.${instanceName}.`)) {
+    return value.replace(`instance.${instanceName}.`, "");
+  }
+
+  return null;
+}
+
+export function hasHomepageLabels(labels, instanceName) {
+  return Object.keys(labels ?? {}).some((label) => homepageLabelValue(label, instanceName) !== null);
 }
 
 export async function servicesFromDocker() {
@@ -66,7 +106,7 @@ export async function servicesFromDocker() {
   const dockerYaml = path.join(CONF_DIR, "docker.yaml");
   const rawDockerFileContents = await fs.readFile(dockerYaml, "utf8");
   const dockerFileContents = substituteEnvironmentVars(rawDockerFileContents);
-  const servers = yaml.load(dockerFileContents);
+  const servers = loadYaml(dockerFileContents);
 
   if (!servers) {
     return [];
@@ -95,29 +135,23 @@ export async function servicesFromDocker() {
           const containerLabels = isSwarm ? shvl.get(container, "Spec.Labels") : container.Labels;
           const containerName = isSwarm ? shvl.get(container, "Spec.Name") : container.Names[0];
 
-          Object.keys(containerLabels).forEach((label) => {
-            if (label.startsWith("homepage.")) {
-              let value = label.replace("homepage.", "");
-              if (instanceName && value.startsWith(`instance.${instanceName}.`)) {
-                value = value.replace(`instance.${instanceName}.`, "");
-              } else if (value.startsWith("instance.")) {
-                return;
-              }
+          Object.keys(containerLabels ?? {}).forEach((label) => {
+            const value = homepageLabelValue(label, instanceName);
+            if (value === null) return;
 
-              if (!constructedService) {
-                constructedService = {
-                  container: containerName.replace(/^\//, ""),
-                  server: serverName,
-                  weight: 0,
-                  type: "service",
-                };
-              }
-              let substitutedVal = substituteEnvironmentVars(containerLabels[label]);
-              if (value === "widget.version" || /^widgets\[\d+\]\.version$/.test(value)) {
-                substitutedVal = parseVersionForUrl(substitutedVal);
-              }
-              shvl.set(constructedService, value, substitutedVal);
+            if (!constructedService) {
+              constructedService = {
+                container: containerName.replace(/^\//, ""),
+                server: serverName,
+                weight: 0,
+                type: "service",
+              };
             }
+            let substitutedVal = substituteEnvironmentVars(containerLabels[label]);
+            if (value === "widget.version" || /^widgets\[\d+\]\.version$/.test(value)) {
+              substitutedVal = parseVersionForUrl(substitutedVal);
+            }
+            shvl.set(constructedService, value, substitutedVal);
           });
 
           if (constructedService && (!constructedService.name || !constructedService.group)) {
@@ -319,6 +353,9 @@ export function cleanServiceGroups(groups) {
           expandOneStreamToTwoRows,
           showEpisodeNumber,
 
+          // feed
+          layout,
+
           // frigate
           enableRecentEvents,
 
@@ -395,6 +432,9 @@ export function cleanServiceGroups(groups) {
 
           // proxmoxbackupserver
           datastore,
+
+          // qui
+          instance,
 
           // speedtest
           bitratePrecision,
@@ -510,6 +550,9 @@ export function cleanServiceGroups(groups) {
         if (type === "portainer") {
           if (kubernetes) widget.kubernetes = !!JSON.parse(kubernetes);
         }
+        if (type === "qui") {
+          if (instance !== undefined) widget.instance = instance;
+        }
         if (type === "proxmox") {
           if (node) widget.node = node;
         }
@@ -580,6 +623,7 @@ export function cleanServiceGroups(groups) {
           [
             "authentik",
             "beszel",
+            "fileflows",
             "glances",
             "immich",
             "jellyfin",
@@ -593,6 +637,7 @@ export function cleanServiceGroups(groups) {
             "grafana",
             "gluetun",
             "vikunja",
+            "pulse",
           ].includes(type)
         ) {
           widget.version = parseVersionForUrl(version);
@@ -643,6 +688,9 @@ export function cleanServiceGroups(groups) {
           if (previousDays) widget.previousDays = previousDays;
           if (showTime) widget.showTime = showTime;
           if (timezone) widget.timezone = timezone;
+        }
+        if (type === "feed") {
+          if (layout) widget.layout = layout;
         }
         if (type === "dockhand") {
           if (environment) widget.environment = environment;

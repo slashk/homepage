@@ -1,5 +1,13 @@
-/* eslint-disable react/no-array-index-key */
 import classNames from "classnames";
+import { useTranslation } from "next-i18next/pages";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import Script from "next/script";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { BiError } from "react-icons/bi";
+import useSWR, { SWRConfig } from "swr";
+
 import BookmarksGroup from "components/bookmarks/group";
 import ErrorBoundary from "components/errorboundry";
 import QuickLaunch from "components/quicklaunch";
@@ -7,24 +15,13 @@ import ServicesGroup from "components/services/group";
 import Tab, { slugifyAndEncode } from "components/tab";
 import Revalidate from "components/toggles/revalidate";
 import Widget from "components/widgets/widget";
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import dynamic from "next/dynamic";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import Script from "next/script";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { BiError } from "react-icons/bi";
-import useSWR, { SWRConfig } from "swr";
+import { withPageAuth } from "utils/auth";
+import { getDashboardData } from "utils/config/dashboard";
 import { ColorContext } from "utils/contexts/color";
 import { SettingsContext } from "utils/contexts/settings";
 import { TabContext } from "utils/contexts/tab";
 import { ThemeContext } from "utils/contexts/theme";
-
-import { bookmarksResponse, servicesResponse, widgetsResponse } from "utils/config/api-response";
-import { getSettings } from "utils/config/config";
 import useWindowFocus from "utils/hooks/window-focus";
-import createLogger from "utils/logger";
 import themes from "utils/styles/themes";
 
 const ThemeToggle = dynamic(() => import("components/toggles/theme"), {
@@ -32,6 +29,10 @@ const ThemeToggle = dynamic(() => import("components/toggles/theme"), {
 });
 
 const ColorToggle = dynamic(() => import("components/toggles/color"), {
+  ssr: false,
+});
+
+const SignOut = dynamic(() => import("components/toggles/signout"), {
   ssr: false,
 });
 
@@ -52,83 +53,42 @@ const normalizeLanguage = (language) => {
   return alias || language;
 };
 
-export async function getStaticProps() {
-  let logger;
-  try {
-    logger = createLogger("index");
-    const { providers, ...settings } = getSettings();
-
-    const services = await servicesResponse();
-    const bookmarks = await bookmarksResponse();
-    const widgets = await widgetsResponse();
-    const language = normalizeLanguage(settings.language);
-
-    return {
-      props: {
-        initialSettings: settings,
-        fallback: {
-          "/api/services": services,
-          "/api/bookmarks": bookmarks,
-          "/api/widgets": widgets,
-          "/api/hash": false,
-        },
-        ...(await serverSideTranslations(language)),
-      },
-    };
-  } catch (e) {
-    if (logger && e) {
-      logger.error(e);
-    }
-    return {
-      props: {
-        initialSettings: {},
-        fallback: {
-          "/api/services": [],
-          "/api/bookmarks": [],
-          "/api/widgets": [],
-          "/api/hash": false,
-        },
-        ...(await serverSideTranslations("en")),
-      },
-    };
-  }
-}
+export const getServerSideProps = withPageAuth(async () => ({ props: await getDashboardData() }));
 
 function Index({ initialSettings, fallback }) {
   const windowFocused = useWindowFocus();
   const [stale, setStale] = useState(false);
   const { data: errorsData } = useSWR("/api/validate");
   const { error: validateError } = errorsData || {};
-  const { data: hashData, mutate: mutateHash } = useSWR("/api/hash");
+
+  const handleHashData = useCallback((hashData) => {
+    if (typeof window === "undefined" || !hashData?.hash) return;
+
+    const previousHash = localStorage.getItem("hash");
+
+    if (!previousHash) {
+      localStorage.setItem("hash", hashData.hash);
+    }
+
+    if (previousHash && previousHash !== hashData.hash) {
+      setStale(true);
+      localStorage.setItem("hash", hashData.hash);
+
+      fetch("/api/revalidate").then((res) => {
+        if (res.ok) {
+          window.location.reload();
+        }
+      });
+    }
+  }, []);
+
+  const { mutate: mutateHash } = useSWR("/api/hash", { onSuccess: handleHashData });
 
   useEffect(() => {
     if (windowFocused) {
       mutateHash();
     }
   }, [windowFocused, mutateHash]);
-
-  useEffect(() => {
-    if (hashData) {
-      if (typeof window !== "undefined") {
-        const previousHash = localStorage.getItem("hash");
-
-        if (!previousHash) {
-          localStorage.setItem("hash", hashData.hash);
-        }
-
-        if (previousHash && previousHash !== hashData.hash) {
-          setStale(true);
-          localStorage.setItem("hash", hashData.hash);
-
-          fetch("/api/revalidate").then((res) => {
-            if (res.ok) {
-              window.location.reload();
-            }
-          });
-        }
-      }
-    }
-  }, [hashData]);
 
   if (validateError) {
     return (
@@ -167,11 +127,13 @@ function Index({ initialSettings, fallback }) {
             >
               <div className="bg-amber-200 text-amber-800 dark:text-amber-200 dark:bg-amber-800 p-2 rounded-md font-bold">
                 <BiError className="float-right w-6 h-6" />
-                {error.config}
+                {error.name} - {error.config}
               </div>
               <div className="p-2 text-theme-100 dark:text-theme-200">
-                <pre className="opacity-50 font-bold pb-2">{error.reason}</pre>
-                <pre className="text-sm">{error.mark.snippet}</pre>
+                <pre className="opacity-50 font-bold pb-2">
+                  Reason: &quot;{error.reason}&quot; at line {error.mark?.line}
+                </pre>
+                <pre className="font-italic">Check logs for details.</pre>
               </div>
             </div>
           ))}
@@ -259,6 +221,13 @@ function Home({ initialSettings }) {
           e.key.match(/([à-ü]|[À-Ü]|!)/g) ||
           (e.key === "v" && (e.ctrlKey || e.metaKey))
         ) {
+          if (e.key.length === 1 && !(e.key === "v" && (e.ctrlKey || e.metaKey))) {
+            e.preventDefault();
+            // whitespace opens the search but shouldn't be in it
+            if (e.key.trim()) {
+              setSearchString((currentSearchString) => currentSearchString + e.key);
+            }
+          }
           setSearching(true);
         } else if (e.key === "Escape") {
           setSearchString("");
@@ -415,10 +384,11 @@ function Home({ initialSettings }) {
         />
         {settings.disableIndexing && <meta name="robots" content="noindex, nofollow" />}
         {settings.base && <base href={settings.base} />}
-        {settings.favicon ? (
+        {/* from props, not context so its set before running JS */}
+        {initialSettings.favicon ? (
           <>
-            <link rel="icon" href={settings.favicon} />
-            <link rel="apple-touch-icon" sizes="180x180" href={settings.favicon} />
+            <link rel="icon" href={initialSettings.favicon} />
+            <link rel="apple-touch-icon" sizes="180x180" href={initialSettings.favicon} />
           </>
         ) : (
           <>
@@ -500,6 +470,7 @@ function Home({ initialSettings }) {
           <div id="style" className="flex w-full justify-end">
             {!settings?.color && <ColorToggle />}
             <Revalidate />
+            <SignOut />
             {!settings.theme && <ThemeToggle />}
           </div>
 
@@ -539,7 +510,9 @@ export default function Wrapper({ initialSettings, fallback }) {
     const html = document.documentElement;
     const body = document.body;
 
-    html.classList.remove("dark", "scheme-dark", "scheme-light");
+    html.classList.remove("dark", "scheme-dark", "scheme-light", "font-plex", "font-plex-data");
+    if (initialSettings.font === "plex") html.classList.add("font-plex");
+    if (initialSettings.font === "plexData") html.classList.add("font-plex-data");
     html.classList.toggle("dark", theme === "dark");
     html.classList.add(theme === "dark" ? "scheme-dark" : "scheme-light");
 
@@ -558,7 +531,7 @@ export default function Wrapper({ initialSettings, fallback }) {
     body.style.backgroundImage = "";
     body.style.backgroundColor = "";
     body.style.backgroundAttachment = "";
-  }, [backgroundImage, opacity, theme, color, initialSettings.color]);
+  }, [backgroundImage, opacity, theme, color, initialSettings.color, initialSettings.font]);
 
   return (
     <>

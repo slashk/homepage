@@ -1,9 +1,8 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-import yaml from "js-yaml";
-
 import checkAndCopyConfig, { CONF_DIR, substituteEnvironmentVars } from "utils/config/config";
+import { loadYaml } from "utils/config/yaml";
 
 export async function widgetsFromConfig() {
   checkAndCopyConfig("widgets.yaml");
@@ -11,7 +10,7 @@ export async function widgetsFromConfig() {
   const widgetsYaml = path.join(CONF_DIR, "widgets.yaml");
   const rawFileContents = await fs.readFile(widgetsYaml, "utf8");
   const fileContents = substituteEnvironmentVars(rawFileContents);
-  const widgets = yaml.load(fileContents);
+  const widgets = loadYaml(fileContents);
 
   if (!widgets) return [];
 
@@ -32,7 +31,7 @@ export async function cleanWidgetGroups(widgets) {
     const optionKeys = Object.keys(sanitizedOptions);
 
     // delete private options from the sanitized options
-    ["username", "password", "key", "apiKey"].forEach((pO) => {
+    ["username", "password", "key", "apiKey", "headers", "requestBody", "method"].forEach((pO) => {
       if (optionKeys.includes(pO)) {
         delete sanitizedOptions[pO];
       }
@@ -58,7 +57,7 @@ export async function getPrivateWidgetOptions(type, widgetIndex) {
 
   const privateOptions =
     widgets.map((widget) => {
-      const { index, url, username, password, key, apiKey } = widget.options;
+      const { index, url, username, password, key, apiKey, headers, requestBody, method } = widget.options;
 
       return {
         type: widget.type,
@@ -69,6 +68,9 @@ export async function getPrivateWidgetOptions(type, widgetIndex) {
           password,
           key,
           apiKey,
+          headers,
+          requestBody,
+          method,
         },
       };
     }) || {};

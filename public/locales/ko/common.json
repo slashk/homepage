@@ -20,6 +20,9 @@
         "minutes": "분",
         "seconds": "초"
     },
+    "auth": {
+        "signout": "로그아웃"
+    },
     "widget": {
         "missing_type": "없는 위젯 유형: {{type}}",
         "api_error": "API 오류",
@@ -36,7 +39,9 @@
         "wait": "잠시만 기다리세요"
     },
     "search": {
-        "placeholder": "검색…"
+        "placeholder": "검색…",
+        "provider": "검색 엔진: {{name}}",
+        "select_provider": "검색 엔진 선택"
     },
     "resources": {
         "cpu": "CPU",
@@ -71,6 +76,15 @@
         "degraded": "성능 저하",
         "no_data": "저장소 데이터 없음"
     },
+    "duplicati": {
+        "jobs": "Jobs",
+        "stored": "Stored",
+        "lastBackup": "Last Run",
+        "nextRun": "Next Run",
+        "running": "Running",
+        "warnings": "Warnings",
+        "errors": "Errors"
+    },
     "docker": {
         "rx": "수신",
         "tx": "송신",
@@ -85,7 +99,12 @@
         "unhealthy": "비정상",
         "not_found": "찾을 수 없음",
         "exited": "종료됨",
-        "partial": "부분적"
+        "partial": "부분적",
+        "created": "Created",
+        "paused": "Paused",
+        "restarting": "Restarting",
+        "removing": "Removing",
+        "dead": "Dead"
     },
     "ping": {
         "error": "오류",
@@ -120,7 +139,8 @@
         "movies": "영상",
         "series": "시리즈",
         "episodes": "에피소드",
-        "songs": "음악"
+        "songs": "음악",
+        "albums": "앨범"
     },
     "esphome": {
         "offline": "오프라인",
@@ -236,6 +256,16 @@
         "leech": "리치",
         "seed": "시드"
     },
+    "qui": {
+        "leech": "Leech",
+        "download": "Download",
+        "seed": "Seed",
+        "upload": "Upload",
+        "total": "Total",
+        "errored": "Errored",
+        "ratio": "Ratio",
+        "freeSpace": "Free"
+    },
     "qnap": {
         "cpuUsage": "CPU 사용량",
         "memUsage": "메모리 사용량",
@@ -344,16 +374,16 @@
         "address": "주소",
         "expires": "만료",
         "never": "없음",
-        "user": "User",
-        "hostname": "Hostname",
-        "name": "Name",
-        "client_version": "Client Version",
-        "os": "OS",
-        "created": "Created",
-        "authorized": "Authorized",
+        "user": "사용자",
+        "hostname": "호스트네임",
+        "name": "이름",
+        "client_version": "클라이언트 버전",
+        "os": "운영체제",
+        "created": "생성됨",
+        "authorized": "승인됨",
         "is_external": "Is External",
-        "update_available": "Update Available",
-        "tags": "Tags",
+        "update_available": "새 업데이트 있음",
+        "tags": "태그",
         "last_seen": "마지막 접속",
         "now": "지금",
         "years": "{{number}}년",
@@ -363,8 +393,8 @@
         "minutes": "{{number}}분",
         "seconds": "{{number}}초",
         "ago": "{{value}} 전",
-        "true": "Yes",
-        "false": "No"
+        "true": "네",
+        "false": "아니오"
     },
     "technitium": {
         "totalQueries": "총 쿼리",
@@ -458,13 +488,19 @@
     "authentik": {
         "users": "사용자",
         "loginsLast24H": "로그인 (24시간)",
-        "failedLoginsLast24H": "실패한 로그인 (24시간)"
+        "failedLoginsLast24H": "실패한 로그인 (24시간)",
+        "authorizationsLast24H": "인증(24시간)"
     },
     "proxmox": {
         "mem": "메모리",
         "cpu": "CPU",
         "lxc": "LXC",
         "vms": "가상머신"
+    },
+    "pulse": {
+        "nodes": "Nodes",
+        "vms": "VMs",
+        "lxcs": "LXCs"
     },
     "glances": {
         "cpu": "CPU",
@@ -754,7 +790,8 @@
         "queue": "대기열",
         "processing": "처리 중",
         "processed": "처리됨",
-        "time": "시간"
+        "time": "시간",
+        "failed": "Failed"
     },
     "firefly": {
         "networth": "순자산",
@@ -830,6 +867,14 @@
     "booklore": {
         "libraries": "라이브러리",
         "books": "책",
+        "reading": "읽는 중",
+        "finished": "완료"
+    },
+    "bookorbit": {
+        "books": "책",
+        "authors": "저자",
+        "series": "시리즈",
+        "storage": "저장 공간",
         "reading": "읽는 중",
         "finished": "완료"
     },
@@ -932,22 +977,38 @@
         "mails": "메일",
         "storage": "저장 공간"
     },
+    "maintainerr": {
+        "itemsHandled": "Items Handled",
+        "episodesHandled": "Episodes Handled",
+        "moviesHandled": "Movies Handled",
+        "showsHandled": "Shows Handled",
+        "seasonsHandled": "Seasons Handled",
+        "reclaimable": "Reclaimable",
+        "movieReclaimable": "Movie Reclaimable",
+        "showReclaimable": "Show Reclaimable",
+        "totalCapacity": "Total Capacity"
+    },
+    "netbird": {
+        "online": "Online Peers",
+        "users": "Users",
+        "login_expired": "Login Expired"
+    },
     "netdata": {
         "warnings": "경고",
         "criticals": "심각"
     },
     "ntfy": {
-        "title": "Title",
-        "priority": "Priority",
-        "lastReceived": "Last Received",
-        "message": "Message",
-        "tags": "Tags",
-        "none": "None",
+        "title": "제목",
+        "priority": "우선순위",
+        "lastReceived": "마지막 수신",
+        "message": "메시지",
+        "tags": "태그",
+        "none": "없음",
         "min": "Min",
-        "low": "Low",
-        "default": "Default",
-        "high": "High",
-        "urgent": "Urgent"
+        "low": "낮음",
+        "default": "기본값",
+        "high": "높음",
+        "urgent": "긴급"
     },
     "plantit": {
         "events": "이벤트",
@@ -1210,5 +1271,19 @@
         "burned": "Burned",
         "remaining": "Remaining",
         "steps": "Steps"
+    },
+    "syncthing": {
+        "connected": "Connected",
+        "synced": "Synced",
+        "errors": "Errors",
+        "storage": "Storage"
+    },
+    "sportarr": {
+        "wanted": "Wanted",
+        "queued": "Queued",
+        "leagues": "Leagues"
+    },
+    "feed": {
+        "noItems": "항목 없음"
     }
 }

@@ -46,13 +46,25 @@ function Wrapper({ servicesAndBookmarks = [], initialOpen = true } = {}) {
   const [isOpen, setSearching] = useState(initialOpen);
 
   return (
-    <QuickLaunch
-      servicesAndBookmarks={servicesAndBookmarks}
-      searchString={searchString}
-      setSearchString={setSearchString}
-      isOpen={isOpen}
-      setSearching={setSearching}
-    />
+    <>
+      <button
+        type="button"
+        data-testid="seed-key"
+        onClick={() => {
+          setSearchString((current) => `${current}g`);
+          setSearching(true);
+        }}
+      >
+        seed
+      </button>
+      <QuickLaunch
+        servicesAndBookmarks={servicesAndBookmarks}
+        searchString={searchString}
+        setSearchString={setSearchString}
+        isOpen={isOpen}
+        setSearching={setSearching}
+      />
+    </>
   );
 }
 
@@ -151,6 +163,35 @@ describe("components/quicklaunch", () => {
     openSpy.mockRestore();
   });
 
+  it("does not carry a previous url result into a search seeded by a keypress", async () => {
+    renderWithProviders(<Wrapper />, {
+      settings: {
+        target: "_self",
+        quicklaunch: {
+          provider: "duckduckgo",
+          showSearchSuggestions: false,
+        },
+      },
+    });
+
+    const input = screen.getByPlaceholderText("Search");
+    await waitFor(() => expect(input).toHaveFocus());
+
+    fireEvent.change(input, { target: { value: "example.com" } });
+    expect(await screen.findByText("quicklaunch.visit URL")).toBeInTheDocument();
+
+    fireEvent.keyDown(input, { key: "Escape" });
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 350));
+    });
+
+    // reopen by "typing" a character, the way pages/index does
+    fireEvent.click(screen.getByTestId("seed-key"));
+
+    expect(input).toHaveValue("g");
+    expect(screen.queryByText("quicklaunch.visit URL")).not.toBeInTheDocument();
+  });
+
   it("closes on Escape and clears the search string after the timeout", async () => {
     renderWithProviders(<Wrapper />, {
       settings: {
@@ -219,6 +260,37 @@ describe("components/quicklaunch", () => {
     });
 
     expect(openSpy).toHaveBeenCalledWith("https://alpha.example", "_self", "noreferrer");
+    openSpy.mockRestore();
+  });
+
+  it("opens the clicked result even without a preceding hover event", async () => {
+    const openSpy = vi.spyOn(window, "open").mockImplementation(() => null);
+
+    renderWithProviders(
+      <Wrapper
+        servicesAndBookmarks={[
+          { name: "Alpha", href: "https://alpha.example" },
+          { name: "Alpine", href: "https://alpine.example" },
+          { name: "Almond", href: "https://almond.example" },
+        ]}
+      />,
+      { settings: { target: "_self", quicklaunch: { showSearchSuggestions: false } } },
+    );
+
+    const input = screen.getByPlaceholderText("Search");
+    await waitFor(() => expect(input).toHaveFocus());
+
+    fireEvent.change(input, { target: { value: "al" } });
+    await waitFor(() => expect(document.querySelector('button[data-index="2"]')).toBeTruthy());
+
+    // touch devices don't fire mouseEnter, so the highlighted item is still the first one
+    fireEvent.click(document.querySelector('button[data-index="2"]'));
+
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 350));
+    });
+
+    expect(openSpy).toHaveBeenCalledWith("https://almond.example", "_self", "noreferrer");
     openSpy.mockRestore();
   });
 

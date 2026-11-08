@@ -18,10 +18,7 @@ vi.mock("fs", () => ({
   promises: fs,
 }));
 
-vi.mock("js-yaml", () => ({
-  default: yaml,
-  ...yaml,
-}));
+vi.mock("utils/config/yaml", () => ({ loadYaml: yaml.load }));
 
 vi.mock("utils/config/config", () => config);
 
@@ -61,6 +58,17 @@ describe("utils/config/widget-helpers", () => {
 
     expect(cleaned[2].options.url).toBe("http://z");
     expect(cleaned[2].options.apiKey).toBeUndefined();
+  });
+
+  it("cleanWidgetGroups removes customapi request options", async () => {
+    const cleaned = await cleanWidgetGroups([
+      {
+        type: "customapi",
+        options: { index: 0, url: "http://x", headers: { a: "b" }, requestBody: "body", method: "POST", icon: "mdi-x" },
+      },
+    ]);
+
+    expect(cleaned[0].options).toEqual({ index: 0, icon: "mdi-x" });
   });
 
   it("getPrivateWidgetOptions returns private options for a specific widget", async () => {
